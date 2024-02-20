@@ -1,0 +1,66 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Recipe {
+  id                Int               @id @default(autoincrement())
+  title             String
+  thumbnailUrl      String?
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  recipeCategories  RecipeCategory[]
+  materials         Material[]
+  howTos            HowTo[]
+}
+
+model Category {
+  id                Int               @id @default(autoincrement())
+  name              String
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  recipeCategories  RecipeCategory[]
+}
+
+model RecipeCategory {
+  id                Int               @id @default(autoincrement())
+  recipeId          Int
+  categoryId        Int
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  recipe            Recipe            @relation(fields: [recipeId], references: [id])
+  category          Category          @relation(fields: [categoryId], references: [id])
+}
+
+model Material {
+  id                Int               @id @default(autoincrement())
+  name              String
+  quantity          String
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  recipeId          Int
+  recipe            Recipe            @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+}
+
+model HowTo {
+  id                Int               @id @default(autoincrement())
+  index             Int
+  text              String
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  recipeId          Int
+  recipe            Recipe            @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+}
+
+model Contact {
+  id                Int               @id @default(autoincrement())
+  name              String
+  email             String
+  message           String
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+}

@@ -1,0 +1,151 @@
+/* styles/CreateRecipeForm.module.css */
+.formContainer {
+    max-width: 700px;
+    margin: auto;
+    padding: 20px;
+}
+
+.formTitle {
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.inputField,
+.textArea {
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* タイトル */
+
+.titleContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+/* CreateRecipeForm.module.css */
+.thumbnailContainer {
+    display: flex;
+    align-items: flex-start; /* アイテムを上揃えにする */
+    justify-content: space-between;
+    gap: 16px; /* アップロードフィールドとプレビューの間隔 */
+}
+
+.thumbnailPreview {
+    width: 288px; /* プレビュー画像の幅 */
+    height: auto; /* 高さは自動で調整 */
+    border: 1px solid #ccc; /* 枠線をつける */
+    border-radius: 4px; /* 角を丸くする */
+}
+/* サムネイルアップロードフィールドのコンテナ */
+.thumbnailInputContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* ラベルと入力フィールドの間隔 */
+}
+
+/* カテゴリセレクトボックスのコンテナ */
+.categoryContainer {
+    
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* セレクトボックスのスタイル */
+.selectField {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: white;
+    margin-top: 8px;
+}
+
+/* 材料アイテムのスタイルを更新 */
+.materialItem {
+    display: flex;
+    align-items: center; /* 中央揃えにする */
+    gap: 10px; /* 要素の間隔を設定 */
+}
+
+/* 追加と削除ボタンのスタイルを更新 */
+.addButton,
+.removeButton,
+.submitButton {
+    padding: 10px 15px; /* パディングを調整 */
+    border: none; /* 枠線を削除 */
+    border-radius: 5px; /* 角丸を設定 */
+    color: white; /* テキスト色を白に */
+    font-weight: bold; /* フォントを太く */
+}
+
+.addButton {
+    background-color: #007bff; /* 追加ボタンは青色 */
+}
+
+.removeButton {
+    background-color: #dc3545; /* 削除ボタンは赤色 */
+}
+
+.materialsContainer {
+    margin-top: 20px;
+    margin-bottom: 90px;
+}
+
+/* 入力フィールドのスタイルを調整 */
+.materialNameInput,
+.materialQuantityInput {
+    flex: 1; /* 可能な限りの幅を取るように */
+    margin-right: 10px; /* 右側のマージンを設定 */
+}
+
+.submitButton {
+    background-color: #28a745;
+    /* 中央寄せ */
+    display: block;
+    margin: auto;
+    margin-top: 90px;
+}
+
+/* 材料アイテムのスタイルを更新 */
+.materialItem {
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 16px; /* 下部の余白 */
+}
+
+/* ラベルのスタイル */
+.label {
+    display: block;
+    text-align: center;
+    margin-bottom: 10px; /* ラベルの下の余白 */
+}
+
+/* ボタンコンテナのスタイルを追加 */
+.buttonContainer {
+    display: flex; /* フレックスコンテナにする */
+    justify-content: flex-end; /* ボタンを右端に寄せる */
+    gap: 10px; /* ボタンの間隔 */
+}
+
+.buttonContainer button {
+    margin-top: 10px;
+}
+
+/* 既存のボタンスタイルはそのまま使用 */
+.howToItem {
+    margin-bottom: 30px;
+}
+.textArea {
+    width: 100%;
+    height: 100px; /* お好みで調整してください */
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}

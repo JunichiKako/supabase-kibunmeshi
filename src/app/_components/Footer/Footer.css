@@ -1,0 +1,35 @@
+footer {
+    padding-top: 50px;
+    text-align: center;
+    position: relative;
+}
+
+footer p {
+    position: absolute;
+    bottom: 0;
+    font-size: 10px;
+    margin: auto;
+    width: 100%;
+    padding: 20px 0;
+    text-align: center;
+}
+
+
+/* Footer.css */
+
+.footer-fixed {
+    padding-top: 50px;
+    text-align: center;
+    position: fixed; /* フッターをビューポートの最下部に固定 */
+    left: 0; /* 左端から0の位置 */
+    bottom: 0; /* 下端から0の位置 */
+    width: 100%; /* 幅をビューポート全体に */
+    background-color: #fff; /* 背景色はページのデザインに合わせます */
+    z-index: 10; /* フッターが他の要素より上に表示されるように */
+}
+
+.footer-fixed p {
+    font-size: 10px;
+    margin: 0;
+    padding: 20px 0;
+}

@@ -1,0 +1,75 @@
+.content-header {
+    max-width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 50px;
+    padding: 0 46px;
+}
+
+/* --------------------------
+    検索フォーム
+   -------------------------- */
+
+.search-results {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 20px 30px;
+    margin-bottom: 80px;
+    padding: 0 32px;
+}
+
+.search-form {
+    max-width: 100%;
+}
+
+.search-form input {
+    outline: none;
+    border: 0.5px solid #ccc;
+    padding: 8px 96px 8px 16px;
+    border-radius: 5px;
+}
+
+.search-btn {
+    border: none;
+    padding: 7px 16px;
+    background: #1216f9;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.search-btn:hover {
+    opacity: 0.8;
+}
+
+@media screen and (max-width: 768px) {
+    .content-header {
+        width: 100%;
+        flex-direction: column;
+        align-items: start;
+        padding: 0 24px;
+    }
+    .search-form {
+        display: flex;
+        align-items: center;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .content-header {
+        padding: 0 12px;
+    }
+
+    .search-form input {
+        width: 75%;
+        padding: 6px 54px 6px 16px;
+    }
+    .search-form button {
+        width: 24%;
+        white-space: nowrap;
+        font-size: 0.775rem;
+        padding: 4px 10px;
+    }
+}
