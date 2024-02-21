@@ -15,7 +15,7 @@ type PostFormProps = {
     title: string;
     setTitle: (title: string) => void;
     thumbnailUrl: string | null;
-    setThumbnailUrl: (thumbnailUrl: string) => void;
+    setThumbnailUrl: (thumbnailUrl: string | null) => void;
     categoryId: number;
     setCategoryId: (categoryId: number) => void;
     materials: Material[];

@@ -1,10 +1,10 @@
 // SelectCategory.tsx
 import React from "react";
-import styles from "../new/CreateRecipeForm.module.css"; // スタイルモジュールのパスを適宜設定してください。
+import styles from "../new/CreateRecipeForm.module.css"; 
 
 type SelectCategoryProps = {
     categoryId: number; // 選択されたカテゴリーID
-    setCategoryId: React.Dispatch<React.SetStateAction<number>>; // カテゴリーIDを更新する関数
+    setCategoryId: (categoryId: number) => void;
 };
 
 const SelectCategory: React.FC<SelectCategoryProps> = ({

@@ -1,37 +1,31 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
+import { RecipeData } from "../../../types/recipe";
 
 const prisma = new PrismaClient();
 
 export const POST = async (req: NextRequest) => {
     try {
-        const body = await req.json();
-        const { title, thumbnailUrl, categories, materials, howTos } = body;
+        const body: RecipeData = await req.json();
+        const { title, thumbnailUrl, categoryId, materials, howTos } = body;
 
         // レシピと関連データの作成
         const data = await prisma.recipe.create({
             data: {
                 title,
                 thumbnailUrl,
+                categoryId,
                 materials: {
                     create: materials,
                 },
                 howTos: {
-                    create: howTos,
+                    create: howTos.map((howTo, index) => ({
+                        ...howTo,
+                        index, // ここで手順のindexを設定
+                    })),
                 },
             },
         });
-
-        // 記事とカテゴリーの中間テーブルのレコードをDBに生成
-        // 本来複数同時生成には、createManyというメソッドがあるが、sqliteではcreateManyが使えないので、for文1つずつ実施
-        for (const category of categories) {
-            await prisma.recipeCategory.create({
-                data: {
-                    categoryId: category.id,
-                    recipeId: data.id,
-                },
-            });
-        }
 
         // レスポンスを返す
         return NextResponse.json({

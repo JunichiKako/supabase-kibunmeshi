@@ -47,3 +47,13 @@ export interface Material {
 export interface HowTo {
     text: string;
 }
+
+// supabase
+export interface RecipeData {
+    id: string;
+    title: string;
+    thumbnailUrl: string;
+    categoryId: number;
+    materials: Material[];
+    howTos: HowTo[];
+}

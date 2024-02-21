@@ -7,10 +7,10 @@ import { Material } from "../../../types/recipe";
 
 const CreateRecipeForm: React.FC = () => {
     const [title, setTitle] = useState("");
-    const [thumbnailUrl, setThumbnailUrl] = useState(
-        'https://placehold.jp/800x400.png'
+    const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(
+        "https://placehold.jp/800x400.png"
     );
-    const [category, setCategory] = useState<number[]>([]);
+    const [categoryId, setCategoryId] = useState<number>(0);
     const [materials, setMaterials] = useState<Material[]>([
         { name: "", quantity: "" },
     ]);
@@ -20,7 +20,7 @@ const CreateRecipeForm: React.FC = () => {
     const handleSubmit = async (
         title: string,
         thumbnailUrl: string | null,
-        categories: string,
+        categoryId: number,
         materials: Material[],
         howTos: { text: string }[]
     ) => {
@@ -32,8 +32,8 @@ const CreateRecipeForm: React.FC = () => {
             },
             body: JSON.stringify({
                 title,
-                thumbnailUrl:
-                categories,
+                thumbnailUrl,
+                categoryId,
                 materials,
                 howTos,
             }),
@@ -93,12 +93,13 @@ const CreateRecipeForm: React.FC = () => {
     return (
         <div>
             <RecipeForm
+                mode="new"
                 title={title}
                 setTitle={setTitle}
                 thumbnailUrl={thumbnailUrl}
                 setThumbnailUrl={setThumbnailUrl}
-                category={category}
-                setCategory={setCategory}
+                categoryId={categoryId}
+                setCategoryId={setCategoryId}
                 materials={materials}
                 setMaterials={setMaterials}
                 howTos={howTos}
@@ -107,7 +108,7 @@ const CreateRecipeForm: React.FC = () => {
                     handleSubmit(
                         title,
                         thumbnailUrl,
-                        category,
+                        categoryId,
                         materials,
                         howTos
                     )
