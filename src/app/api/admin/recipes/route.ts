@@ -9,6 +9,14 @@ export const POST = async (req: NextRequest) => {
         const body: RecipeData = await req.json();
         const { title, thumbnailUrl, categoryId, materials, howTos } = body;
 
+        // categoryId の検証
+        const category = await prisma.category.findUnique({
+            where: { id: categoryId },
+        });
+        if (!category) {
+            throw new Error(`Category with ID ${categoryId} does not exist.`);
+        }
+
         // レシピと関連データの作成
         const data = await prisma.recipe.create({
             data: {

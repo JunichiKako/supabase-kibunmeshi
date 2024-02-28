@@ -17,14 +17,9 @@ const CreateRecipeForm: React.FC = () => {
     const [howTos, setHowTos] = useState<{ text: string }[]>([{ text: "" }]);
     const router = useRouter();
 
-    const handleSubmit = async (
-        title: string,
-        thumbnailUrl: string | null,
-        categoryId: number,
-        materials: Material[],
-        howTos: { text: string }[]
-    ) => {
+    const handleSubmit = async (e: React.FormEvent<Element>) => {
         // フォーム送信処理...
+        e.preventDefault();
         const response = await fetch("/api/admin/recipes", {
             method: "POST",
             headers: {
@@ -104,15 +99,7 @@ const CreateRecipeForm: React.FC = () => {
                 setMaterials={setMaterials}
                 howTos={howTos}
                 setHowTos={setHowTos}
-                handleSubmit={() =>
-                    handleSubmit(
-                        title,
-                        thumbnailUrl,
-                        categoryId,
-                        materials,
-                        howTos
-                    )
-                }
+                handleSubmit={handleSubmit}
                 handleMaterialChange={handleMaterialChange}
                 addMaterial={addMaterial}
                 removeMaterial={removeMaterial}

@@ -15,16 +15,7 @@ export const GET = async (
                 id: parseInt(id),
             },
             include: {
-                recipeCategories: {
-                    include: {
-                        category: {
-                            select: {
-                                id: true,
-                                name: true,
-                            },
-                        },
-                    },
-                },
+                category: true,
                 materials: true, // 材料を含める場合
                 howTos: true, // 調理手順を含める場合
             },
@@ -52,7 +43,7 @@ export const PUT = async (
     const { id } = params;
 
     // リクエストのbodyを取得
-    const { title, thumbnailUrl, categories, materials, howTos } =
+    const { title, thumbnailUrl, categoryId, materials, howTos } =
         await request.json();
 
     try {
@@ -64,6 +55,7 @@ export const PUT = async (
             data: {
                 title,
                 thumbnailUrl,
+                categoryId,
                 materials: {
                     create: materials,
                 },
@@ -72,24 +64,6 @@ export const PUT = async (
                 },
             },
         });
-
-        // 一旦、記事とカテゴリーの中間テーブルのレコードを全て削除
-        await prisma.recipeCategory.deleteMany({
-            where: {
-                recipeId: parseInt(id),
-            },
-        });
-
-        // 記事とカテゴリーの中間テーブルのレコードをDBに生成
-        // 本来複数同時生成には、createManyというメソッドがあるが、sqliteではcreateManyが使えないので、for文1つずつ実施
-        for (const category of categories) {
-            await prisma.recipeCategory.create({
-                data: {
-                    recipeId: recipe.id,
-                    categoryId: category.id,
-                },
-            });
-        }
 
         // レスポンスを返す
         return NextResponse.json(
