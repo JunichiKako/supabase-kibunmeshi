@@ -4,6 +4,7 @@ import { RecipeData } from "../../../types/recipe";
 
 const prisma = new PrismaClient();
 
+// レシピ投稿のAPI
 export const POST = async (req: NextRequest) => {
     try {
         const body: RecipeData = await req.json();
@@ -51,5 +52,32 @@ export const POST = async (req: NextRequest) => {
             }),
             { status: 400 }
         );
+    }
+};
+
+// 管理者画面のレシピ一覧取得のAPI
+export const GET = async (request: NextRequest) => {
+    try {
+        const posts = await prisma.recipe.findMany({
+            include: {
+                category: true, // カテゴリ情報を含める
+                materials: true, // 材料情報を含める
+                howTos: true, // 調理手順を含める
+            },
+            orderBy: {
+                createdAt: "desc",
+            },
+        });
+
+        return NextResponse.json(
+            { status: "OK", posts: posts },
+            { status: 200 }
+        );
+    } catch (error) {
+        if (error instanceof Error)
+            return NextResponse.json(
+                { status: error.message },
+                { status: 400 }
+            );
     }
 };
