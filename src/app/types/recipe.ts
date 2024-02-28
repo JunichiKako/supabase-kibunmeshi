@@ -20,11 +20,6 @@ export interface RecipeList {
     contents: Recipe[];
 }
 
-export interface Category {
-    id: string;
-    title: string;
-}
-
 export interface CategoryData {
     contents: Recipe[];
 }
@@ -49,11 +44,21 @@ export interface HowTo {
 }
 
 // supabase
+export interface Category {
+    id: number;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
 export interface RecipeData {
-    id: string;
+    id: number; // 数値型に変更
     title: string;
     thumbnailUrl: string;
     categoryId: number;
+    createdAt: string;
+    updatedAt: string;
+    category: Category;
     materials: Material[];
     howTos: HowTo[];
 }

@@ -58,7 +58,7 @@ export const POST = async (req: NextRequest) => {
 // 管理者画面のレシピ一覧取得のAPI
 export const GET = async (request: NextRequest) => {
     try {
-        const posts = await prisma.recipe.findMany({
+        const recipes = await prisma.recipe.findMany({
             include: {
                 category: true, // カテゴリ情報を含める
                 materials: true, // 材料情報を含める
@@ -70,7 +70,7 @@ export const GET = async (request: NextRequest) => {
         });
 
         return NextResponse.json(
-            { status: "OK", posts: posts },
+            { status: "OK", recipes: recipes },
             { status: 200 }
         );
     } catch (error) {
