@@ -35,10 +35,7 @@ const Page = () => {
             <h2>管理者用レシピページ</h2>
             <ul className={styles.list}>
                 {recipes.map((recipe) => (
-                    <Link
-                        key={recipe.id}
-                        href={`/recipes/${recipe.id}`}
-                    >
+                    <Link key={recipe.id} href={`/admin/recipes/${recipe.id}`}>
                         <li className={styles.listItem}>
                             <h3 className={styles.title}>{recipe.title}</h3>
                             <p className={styles.category}>

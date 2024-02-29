@@ -33,9 +33,11 @@ type PostFormProps = {
     addHowTo: () => void;
     removeHowTo: (index: number) => void;
     handleHowToChange: (index: number, newText: string) => void;
+    onDelete?: () => Promise<void> | void; // onDelete プロパティを追加
 };
 
 const PostForm: React.FC<PostFormProps> = ({
+    mode,
     title,
     setTitle,
     thumbnailUrl,
@@ -53,6 +55,7 @@ const PostForm: React.FC<PostFormProps> = ({
     addHowTo,
     removeHowTo,
     handleHowToChange,
+    onDelete,
 }) => (
     <form onSubmit={handleSubmit} className={styles.formContainer}>
         <h2 className={styles.formTitle}>レシピ投稿</h2>
@@ -72,7 +75,7 @@ const PostForm: React.FC<PostFormProps> = ({
             setThumbnailUrl={setThumbnailUrl}
         />
 
-        <SelectCategory categoryId={categoryId} setCategoryId={setCategoryId} />    
+        <SelectCategory categoryId={categoryId} setCategoryId={setCategoryId} />
 
         <MaterialsForm
             materials={materials}
@@ -87,10 +90,20 @@ const PostForm: React.FC<PostFormProps> = ({
             removeHowTo={removeHowTo}
             handleHowToChange={handleHowToChange}
         />
-
-        <button type="submit" className={styles.submitButton}>
-            レシピを作成
-        </button>
+        <div className={styles.editContainer}>
+            <button type="submit" className={styles.edit_submitButton}>
+                {mode === "new" ? "レシピ作成" : "レシピ更新"}
+            </button>
+            {mode === "edit" && (
+                <button
+                    type="button"
+                    className={styles.deleteButton}
+                    onClick={onDelete}
+                >
+                    レシピ削除
+                </button>
+            )}
+        </div>
     </form>
 );
 
