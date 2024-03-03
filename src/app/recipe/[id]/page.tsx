@@ -3,14 +3,13 @@ import "./recipe-detail.css";
 
 import React, { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
-import { client } from "@/libs/client";
 import { Recipe } from "../../types/recipe";
 import Loading from "@/app/_components/Loading/Loading";
 import Image from "next/image";
 
 export default function RecipeDetail() {
     const [recipe, setRecipe] = useState<Recipe | null>(null);
-    const [loading, setLoading] = useState<boolean>(true);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
 
     const { id } = useParams();
@@ -18,14 +17,18 @@ export default function RecipeDetail() {
     useEffect(() => {
         async function fetchRecipe() {
             try {
-                const response = await client.get({
-                    endpoint: "kibunmeshi",
-                    contentId: id as string,
-                });
-                setRecipe(response);
-                console.log(response);
+                if (!id) return; // idがない場合は早期リターン
+                const response = await fetch(`/api/recipes/${id}`); // APIのURLを修正
+                const data = await response.json();
+                setRecipe(data.recipe);
+                console.log(data);
+                
             } catch (error) {
-                setError(error as Error);
+                setError(
+                    error instanceof Error
+                        ? error
+                        : new Error("An error occurred")
+                );
             }
             setLoading(false);
         }
@@ -41,7 +44,7 @@ export default function RecipeDetail() {
         return <div>Error: {error.message}</div>;
     }
 
-    if (!recipe || !recipe.recipes || recipe.recipes.length === 0) {
+    if (!recipe) {
         return <div>Recipe not found</div>;
     }
 
@@ -61,70 +64,49 @@ export default function RecipeDetail() {
                 <h2 className="recipe-title">{recipe.title}</h2>
                 <div
                     className="category-title"
-                    style={categoryStyles[recipe.category.title] || {}}
+                    style={categoryStyles[recipe.category.name] || {}}
                 >
-                    {recipe.category.title}
+                    {recipe.category.name}
                 </div>
             </div>
 
-            {recipe.recipes
-                .filter((recipe) => recipe && recipe.img?.url)
-                .map((recipe, index) => (
-                    <div key={index} className="thumbnail">
-                        {recipe.img?.url && (
-                            <Image
-                                src={recipe.img.url}
-                                alt={recipe.name || "Recipe image"}
-                                width={700}
-                                height={390}
-                            />
-                        )}
-                    </div>
-                ))}
-
+            {recipe.thumbnailUrl && (
+                <div className="thumbnail">
+                    <Image
+                        src={recipe.thumbnailUrl}
+                        alt={recipe.title || "Recipe image"}
+                        width={700}
+                        height={390}
+                    />
+                </div>
+            )}
             <div className="recipe-material">
-                <div className="material">
-                    <ul className="material-list">
-                        {recipe.recipes
-                            .filter(
-                                (recipe) =>
-                                    recipe && recipe.fieldId === "material"
-                            )
-                            .map((recipe, index) => (
-                                <li key={index}>
-                                    <div className="material-name">
-                                        {recipe.material}
-                                    </div>
-                                    <div className="material-quantity">
-                                        {recipe.quantity}
-                                    </div>
-                                </li>
-                            ))}
-                    </ul>
-                </div>
+                <ul className="material-list">
+                    {recipe.materials.map((material, index) => (
+                        <li key={index}>
+                            <div className="material-name">{material.name}</div>
+                            <div className="material-quantity">
+                                {material.quantity}
+                            </div>
+                        </li>
+                    ))}
+                </ul>
             </div>
+
             <div className="recipe-step">
-                <div className="step-content">
-                    <ol>
-                        {recipe.recipes
-                            .filter(
-                                (recipe) => recipe && recipe.fieldId === "howTo"
-                            )
-                            .map((recipe, index) => (
-                                <li key={index}>
-                                    <div className="step-content-mark">
-                                        {index + 1}
-                                    </div>
-                                    <div
-                                        className="step-content-text"
-                                        dangerouslySetInnerHTML={{
-                                            __html: recipe.howTo || "",
-                                        }}
-                                    />
-                                </li>
-                            ))}
-                    </ol>
-                </div>
+                <ol>
+                    {recipe.howTos.map((howTo, index) => (
+                        <li key={index}>
+                            <div className="step-content-mark">{index + 1}</div>
+                            <div
+                                className="step-content-text"
+                                dangerouslySetInnerHTML={{
+                                    __html: howTo.text || "",
+                                }}
+                            />
+                        </li>
+                    ))}
+                </ol>
             </div>
         </div>
     );

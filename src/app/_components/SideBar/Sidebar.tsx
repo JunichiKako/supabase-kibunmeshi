@@ -5,8 +5,7 @@ import Link from "next/link";
 import "./sidebar.css";
 import { client } from "@/libs/client";
 import { Category } from "../../types/recipe";
-import Image from 'next/image';
-
+import Image from "next/image";
 
 const Sidebar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -17,21 +16,26 @@ const Sidebar = () => {
         setIsOpen(!isOpen);
     };
 
+
     // カテゴリー一覧
     useEffect(() => {
         async function fetchData() {
+            setIsLoading(true); // ローディング開始
             try {
                 // APIからデータを取得
-                const response = await client.getList({
-                    endpoint: "category",
-                });
-
-                setCategories(response.contents);
-                setIsLoading(false);
+                const response = await fetch("/api/categories");
+                const data = await response.json();
+                if (response.ok) {
+                    setCategories(data.categories); // APIのレスポンスに合わせて修正
+                } else {
+                    throw new Error(
+                        data.message || "データの取得に失敗しました"
+                    );
+                }
             } catch (error) {
-                // エラーを処理
-
-                setIsLoading(false);
+                console.error("Fetching categories failed", error);
+            } finally {
+                setIsLoading(false); // ローディング終了
             }
         }
 
@@ -43,7 +47,13 @@ const Sidebar = () => {
             <header className="header">
                 <Link href="/">
                     <h1 className="logo">
-                    <Image src="/images/common/logo.png" alt="ロゴ" width={128} height={77} priority={true}/>
+                        <Image
+                            src="/images/common/logo.png"
+                            alt="ロゴ"
+                            width={128}
+                            height={77}
+                            priority={true}
+                        />
                     </h1>
                 </Link>
             </header>
@@ -63,7 +73,8 @@ const Sidebar = () => {
                             <Link
                                 href="/"
                                 className="sub-menu-home"
-                                onClick={toggleMenu}>
+                                onClick={toggleMenu}
+                            >
                                 ホーム
                             </Link>
                         </li>
@@ -71,14 +82,15 @@ const Sidebar = () => {
                             <Link
                                 href="#category"
                                 className="sub-menu-head"
-                                onClick={toggleMenu}>
+                                onClick={toggleMenu}
+                            >
                                 カテゴリ
                             </Link>
                             <ul className="sub-menu-nav">
                                 {categories.map((category) => (
                                     <li key={category.id}>
                                         <Link href={`/category/${category.id}`}>
-                                            {category.title}
+                                            {category.name}
                                         </Link>
                                     </li>
                                 ))}
@@ -88,7 +100,8 @@ const Sidebar = () => {
                             <Link
                                 href="/contact"
                                 className="sub-menu-contact"
-                                onClick={toggleMenu}>
+                                onClick={toggleMenu}
+                            >
                                 Contact
                             </Link>
                         </li>

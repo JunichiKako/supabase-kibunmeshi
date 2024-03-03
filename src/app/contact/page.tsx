@@ -23,34 +23,34 @@ const Contact = () => {
 
     const handleConfirmSubmit = async () => {
         try {
-            // 環境変数の値をチェック
-            const apiKey = process.env.NEXT_PUBLIC_API_KEY;
-            if (!apiKey) {
-                throw new Error("APIキーが設定されていません。");
-            }
+            // APIキーのチェックは不要になるため削除します
 
-            const response = await fetch(
-                "https://kibunmeshi.microcms.io/api/v1/contacts",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "X-WRITE-API-KEY": apiKey,
-                    },
-                    body: JSON.stringify({ name, email, message }),
-                }
-            );
+            // 環境変数の値をチェックする部分を削除し、
+            // Next.jsのAPIルートにリクエストを送信するように変更します。
+            const response = await fetch("/api/contact", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ name, email, message }),
+            });
 
             if (response.ok) {
                 alert("お問い合わせが正常に送信されました。");
-                clearForm();
+                clearForm(); // フォームの内容をクリア
             } else {
-                alert("送信に失敗しました。再度お試しください。");
+                const errorData = await response.json(); // エラーレスポンスの内容を取得
+                alert(
+                    `送信に失敗しました。${
+                        errorData.message || "再度お試しください。"
+                    }`
+                );
             }
         } catch (error) {
+            console.error(error); // エラー内容をコンソールに出力
             alert("エラーが発生しました。再度お試しください。");
         }
-        setShowConfirmModal(false);
+        setShowConfirmModal(false); // モーダルを閉じる
     };
 
     return (

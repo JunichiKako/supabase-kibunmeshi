@@ -42,9 +42,31 @@ export const PUT = async (
     // paramsの中にidが入っているので、それを取り出す
     const { id } = params;
 
+    // リクエストのbodyの型を定義
+
     // リクエストのbodyを取得
     const { title, thumbnailUrl, categoryId, materials, howTos } =
         await request.json();
+
+    await prisma.material.deleteMany({
+        where: {
+            id: {
+                in: materials
+                    .map((material: any) => material.id)
+                    .filter((id: any) => id !== undefined),
+            },
+        },
+    });
+
+    await prisma.howTo.deleteMany({
+        where: {
+            id: {
+                in: howTos
+                    .map((howTo: any) => howTo.id)
+                    .filter((id: any) => id !== undefined),
+            },
+        },
+    });
 
     try {
         // idを指定して、Recipeを更新
@@ -57,10 +79,16 @@ export const PUT = async (
                 thumbnailUrl,
                 categoryId,
                 materials: {
-                    create: materials,
+                    create: materials.map((material: any) => ({
+                        name: material.name,
+                        quantity: material.quantity,
+                    })),
                 },
                 howTos: {
-                    create: howTos,
+                    create: howTos.map((howTo: any, index: any) => ({
+                        index: index,
+                        text: howTo.text,
+                    })),
                 },
             },
         });

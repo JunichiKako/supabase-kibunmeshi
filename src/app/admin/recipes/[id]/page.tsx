@@ -29,7 +29,9 @@ const CreateRecipeForm: React.FC = () => {
                 thumbnailUrl,
                 categoryId,
                 materials,
-                howTos,
+                howTos:{
+                    
+                },
             }),
         });
         alert("レシピを更新しました！");

@@ -24,7 +24,6 @@ export const GET = async (req: NextRequest) => {
                             mode: "insensitive",
                         },
                     },
-                    // 他の検索条件があればここに追加
                 ],
             };
         }

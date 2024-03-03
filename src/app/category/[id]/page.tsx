@@ -4,41 +4,40 @@ import "./category.css";
 
 import React, { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
-import { client } from "@/libs/client";
-import { CategoryData } from "../../types/recipe";
+import { Recipe } from "../../types/recipe";
 import Link from "next/link";
 import Loading from "@/app/_components/Loading/Loading";
 import Image from "next/image";
 
 const CategoryList = () => {
-    const [data, setData] = useState<CategoryData | null>(null);
+    const [recipes, setRecipes] = useState<Recipe[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
+    const [categoryName, setCategoryName] = useState(""); // カテゴリー名を状態として追加
 
     const { id } = useParams();
 
-    // カテゴリ名に基づくスタイルの型を定義
-    type CategoryStyles = Record<
-        string,
-        { backgroundColor: string; color: string }
-    >;
-
     useEffect(() => {
-        async function fetchCategory() {
+        async function fetchRecipes() {
             try {
-                const response = await client.getList({
-                    endpoint: "kibunmeshi",
-                    queries: { filters: `category[equals]${id}` },
-                });
-                setData(response);
-                console.log(response);
+                if (!id) return;
+                // `/api/recipes?category=${id}`は、カテゴリーIDに基づいてレシピをフェッチするAPIエンドポイントの仮の例です
+                const response = await fetch(`/api/categories/${id}`);
+                const data = await response.json();
+                setRecipes(data.category.recipes);
+                setCategoryName(data.category.name); // カテゴリー名を更新
             } catch (error) {
-                setError(error as Error);
+                setError(
+                    error instanceof Error
+                        ? error
+                        : new Error("An error occurred")
+                );
+            } finally {
+                setLoading(false);
             }
-            setLoading(false);
         }
 
-        fetchCategory();
+        fetchRecipes();
     }, [id]);
 
     if (loading) {
@@ -49,13 +48,11 @@ const CategoryList = () => {
         return <div>Error: {error.message}</div>;
     }
 
-    // データが存在しない、またはcontents配列が空の場合の処理
-    if (!data || !data.contents || data.contents.length === 0) {
-        return <div>Recipe not found</div>;
+    if (!recipes || recipes.length === 0) {
+        return <div>No recipes found for this category</div>;
     }
 
-    // カテゴリー名を取得
-    const categoryName = data.contents[0].category.title;
+
 
     // カテゴリー名に基づいて背景色をマッピング
     const categoryStyles: Record<
@@ -75,26 +72,23 @@ const CategoryList = () => {
     };
 
     return (
-        <div className="categorydetail-content">
-            <h2 className="category-title" style={categoryStyles[categoryName]}>
-                #{categoryName}
-            </h2>
-            <div className="grid">
-                {data.contents.map((content) => (
-                    <div key={content.id} className="item">
-                        <Link href={`/recipe/${content.id}`}>
-                            {content.recipes[0] && content.recipes[0].img && (
-                                <Image
-                                    src={content.recipes[0].img.url}
-                                    alt={content.title}
-                                    layout="fill"
-                                />
-                            )}
-                            <p>{content.title}</p>
-                        </Link>
-                    </div>
-                ))}
-            </div>
+        <div className="recipes-list">
+            {recipes.map((recipe) => (
+                <div key={recipe.id} className="recipe-item">
+                    <Link href={`/recipe/${recipe.id}`}>
+                        {recipe.thumbnailUrl && (
+                            <Image
+                                src={recipe.thumbnailUrl}
+                                alt={recipe.title}
+                                width={300}
+                                height={200}
+                                layout="responsive"
+                            />
+                        )}
+                        <h3>{recipe.title}</h3>
+                    </Link>
+                </div>
+            ))}
         </div>
     );
 };

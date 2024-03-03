@@ -1,49 +1,19 @@
-export interface Recipe {
-    id: string;
-    title: string;
-    category: {
-        title: string;
-    };
-    recipes: Array<{
-        img?: {
-            url: string;
-        };
-        name?: string;
-        fieldId: string;
-        material?: string;
-        quantity?: string;
-        howTo?: string;
-    }>;
-}
-
-export interface RecipeList {
-    contents: Recipe[];
-}
-
-export interface CategoryData {
-    contents: Recipe[];
-}
-
-export interface searchRecipe {
-    id: string;
-    title: string;
-    recipes: {
-        img: {
-            url: string;
-        };
-    }[];
-}
-
 export interface Material {
+    id: number;
     name: string;
     quantity: string;
+    createdAt: string;
+    updatedAt: string;
 }
 
 export interface HowTo {
+    id: number;
+    index: number;
     text: string;
+    createdAt: string;
+    updatedAt: string;
 }
 
-// supabase
 export interface Category {
     id: number;
     name: string;
@@ -51,8 +21,8 @@ export interface Category {
     updatedAt: string;
 }
 
-export interface RecipeData {
-    id: number; // 数値型に変更
+export interface Recipe {
+    id: number;
     title: string;
     thumbnailUrl: string;
     categoryId: number;
@@ -61,4 +31,30 @@ export interface RecipeData {
     category: Category;
     materials: Material[];
     howTos: HowTo[];
+}
+
+// MicroCMSのAPIのレスポンスの型を定義
+
+export interface MicoroCmsRecipe {
+    id: string;
+    title: string;
+    thumbnail: {
+        url: string;
+    };
+    category: {
+        id: string;
+        name: string;
+    };
+    materials: {
+        id: string;
+        name: string;
+        quantity: string;
+    }[];
+    howTo: {
+        id: string;
+        index: number;
+        text: string;
+    }[];
+    createdAt: string;
+    updatedAt: string;
 }

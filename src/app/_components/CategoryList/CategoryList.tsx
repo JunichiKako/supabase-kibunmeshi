@@ -2,29 +2,30 @@
 
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
-import { Recipe } from "../../types/recipe";
-import { client } from "@/libs/client";
+import { Category } from "../../types/recipe";
 import Loading from "../Loading/Loading";
 import Image from "next/image";
 
 const CategoryList = () => {
-    const [categories, setCategories] = useState<Recipe[]>([]);
+    const [categories, setCategories] = useState<Category[]>([]);
     const [categoriesLoading, setCategoriesLoading] = useState<boolean>(true);
     const [categoriesError, setCategoriesError] = useState<Error | null>(null);
 
-    // カテゴリー一覧の取得
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await client.getList({
-                    endpoint: "category",
-                });
-                setCategories(response.contents);
-                setCategoriesLoading(false);
+                const response = await fetch("/api/categories"); // APIエンドポイントへのパスを指定
+                const data = await response.json();
+
+                setCategories(data.categories);
             } catch (error) {
-                setCategoriesError(error as Error);
-                setCategoriesLoading(false);
+                setCategoriesError(
+                    error instanceof Error
+                        ? error
+                        : new Error("An error occurred")
+                );
             }
+            setCategoriesLoading(false);
         }
 
         fetchData();
@@ -62,8 +63,8 @@ const CategoryList = () => {
                     <div className="item" key={category.id}>
                         <Link href={`/category/${category.id}`}>
                             <Image
-                                src={img(category.title)}
-                                alt={category.title}
+                                src={img(category.name)}
+                                alt={category.name}
                                 width={300}
                                 height={200}
                                 priority={true}

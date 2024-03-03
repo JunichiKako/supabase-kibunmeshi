@@ -10,7 +10,7 @@ export const GET = async (
     const { id } = params;
 
     try {
-        const post = await prisma.recipe.findUnique({
+        const recipe = await prisma.recipe.findUnique({
             where: {
                 id: parseInt(id),
             },
@@ -21,7 +21,7 @@ export const GET = async (
             },
         });
 
-        return NextResponse.json({ status: "OK", post: post }, { status: 200 });
+        return NextResponse.json({ status: "OK", recipe: recipe }, { status: 200 });
     } catch (error) {
         if (error instanceof Error)
             return NextResponse.json(
