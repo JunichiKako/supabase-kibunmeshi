@@ -2,11 +2,10 @@
 
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
-import { client } from "@/libs/client";
-import "./recipes.css";
 import Loading from "../_components/Loading/Loading";
 import { Recipe } from "../types/recipe";
 import Image from "next/image";
+import styles from "./Recipes.module.css";
 
 export default function Recipes() {
     const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -52,11 +51,12 @@ export default function Recipes() {
     // ページネーション
     const renderPagiantion = () => {
         return (
-            <div className="pagination">
+            <div className={styles.pagination}>
                 {currentPage > 1 && (
                     <button
                         onClick={() => handlePageChange(currentPage - 1)}
                         disabled={currentPage === 1}
+                        className={styles.pagination_button}
                     >
                         前のページ
                     </button>
@@ -65,6 +65,7 @@ export default function Recipes() {
                 <button
                     onClick={() => handlePageChange(currentPage + 1)}
                     disabled={!!(recipes && recipes.length < recipesPerPage)}
+                    className={styles.pagination_button}
                 >
                     次のページ
                 </button>
@@ -74,7 +75,7 @@ export default function Recipes() {
 
     return (
         <div>
-            <div className="recipes-title">#レシピ一覧</div>
+            <div className={styles.recipes_title}>#レシピ一覧</div>
             <div className="new-content grid">
                 {recipes?.map((recipe) => (
                     <div key={recipe.id} className="item">

@@ -1,11 +1,11 @@
 "use client";
-import "./recipe-detail.css";
 
 import React, { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { Recipe } from "../../types/recipe";
 import Loading from "@/app/_components/Loading/Loading";
 import Image from "next/image";
+import styles from "./Recipe_detail.module.css";
 
 export default function RecipeDetail() {
     const [recipe, setRecipe] = useState<Recipe | null>(null);
@@ -21,7 +21,6 @@ export default function RecipeDetail() {
                 const response = await fetch(`/api/recipes/${id}`); // APIのURLを修正
                 const data = await response.json();
                 setRecipe(data.recipe);
-                console.log(data);
                 
             } catch (error) {
                 setError(
@@ -59,11 +58,11 @@ export default function RecipeDetail() {
     };
 
     return (
-        <div className="recipe-content">
-            <div className="recipe-header">
-                <h2 className="recipe-title">{recipe.title}</h2>
+        <div>
+            <div className={styles.recipe_header}>
+                <h2 className={styles.recipe_title}>{recipe.title}</h2>
                 <div
-                    className="category-title"
+                    className={styles.category_title}
                     style={categoryStyles[recipe.category.name] || {}}
                 >
                     {recipe.category.name}
@@ -71,19 +70,20 @@ export default function RecipeDetail() {
             </div>
 
             {recipe.thumbnailUrl && (
-                <div className="thumbnail">
+                <div className={styles.thumnail}>
                     <Image
                         src={recipe.thumbnailUrl}
                         alt={recipe.title || "Recipe image"}
                         width={700}
                         height={390}
+                        className={styles.thumbnail_img}
                     />
                 </div>
             )}
-            <div className="recipe-material">
+            <div className={styles.recipe_material}>
                 <ul className="material-list">
                     {recipe.materials.map((material, index) => (
-                        <li key={index}>
+                        <li key={index} className={styles.material_item}>
                             <div className="material-name">{material.name}</div>
                             <div className="material-quantity">
                                 {material.quantity}
@@ -93,11 +93,11 @@ export default function RecipeDetail() {
                 </ul>
             </div>
 
-            <div className="recipe-step">
+            <div className={styles.recipe_step}>
                 <ol>
                     {recipe.howTos.map((howTo, index) => (
-                        <li key={index}>
-                            <div className="step-content-mark">{index + 1}</div>
+                        <li key={index} className={styles.step_list}>
+                            <div className={styles.step_content_mark}>{index + 1}</div>
                             <div
                                 className="step-content-text"
                                 dangerouslySetInnerHTML={{

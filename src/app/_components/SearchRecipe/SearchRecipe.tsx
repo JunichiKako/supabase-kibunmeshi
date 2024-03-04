@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import MenuBtn from "../MenuBtn/MenuBtn";
-import "./SearchRecipe.css";
+import styles from "./SearchRecipe.module.css";
 import { useRouter } from "next/navigation";
 
 const SearchRecipe = () => {
@@ -15,16 +15,17 @@ const SearchRecipe = () => {
         await router.push(`/search/?word=${searchTerm}`);
     };
     return (
-        <div className="content-header">
+        <div className={styles.content_header}>
             {/* 検索フォーム */}
-            <div className="search-form">
+            <div className={styles.search_form}>
                 <input
                     type="text"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     placeholder="レシピを検索"
+                    className={styles.search_input}
                 />
-                <button onClick={handleSearch} className="search-btn">
+                <button onClick={handleSearch} className={styles.search_btn}>
                     検索
                 </button>
             </div>

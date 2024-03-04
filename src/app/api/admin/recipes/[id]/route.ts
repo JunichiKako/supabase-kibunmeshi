@@ -1,5 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
-import { Category, PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
+import { Recipe, Material, HowTo } from "../../../../types/recipe";
+
+// PUTリクエストで受け取るリクエストボディの型を定義
+interface UpdateRecipeRequestBody {
+    title: string;
+    thumbnailUrl: string;
+    categoryId: number;
+    materials: Material[];
+    howTos: HowTo[];
+}
 
 const prisma = new PrismaClient();
 
@@ -45,15 +55,20 @@ export const PUT = async (
     // リクエストのbodyの型を定義
 
     // リクエストのbodyを取得
-    const { title, thumbnailUrl, categoryId, materials, howTos } =
-        await request.json();
+    const {
+        title,
+        thumbnailUrl,
+        categoryId,
+        materials,
+        howTos,
+    }: UpdateRecipeRequestBody = await request.json();
 
     await prisma.material.deleteMany({
         where: {
             id: {
                 in: materials
-                    .map((material: any) => material.id)
-                    .filter((id: any) => id !== undefined),
+                    .map((material) => material.id)
+                    .filter((id) => id !== undefined),
             },
         },
     });
@@ -62,8 +77,8 @@ export const PUT = async (
         where: {
             id: {
                 in: howTos
-                    .map((howTo: any) => howTo.id)
-                    .filter((id: any) => id !== undefined),
+                    .map((howTo) => howTo.id)
+                    .filter((id) => id !== undefined),
             },
         },
     });

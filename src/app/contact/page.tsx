@@ -1,13 +1,13 @@
 "use client";
 
-import "./contact.css";
 import { useState, FormEvent, ChangeEvent } from "react";
+import styles from "./Contact.module.css";
 
 const Contact = () => {
     const [name, setName] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [message, setMessage] = useState<string>("");
-    const [showConfirmModal, setShowConfirmModal] = useState<boolean>(false);
+    const [showConfirmModal, setShowConfirmModal] = useState(false);
 
     // 同じく、フォームの内容をクリアする関数
     const clearForm = () => {
@@ -55,11 +55,11 @@ const Contact = () => {
 
     return (
         <div>
-            <div className="contact-title">#Contact</div>
-            <div className="contact-container">
+            <div className={styles.contact_title}>#Contact</div>
+            <div className={styles.contact_container}>
                 <form onSubmit={handleSubmit}>
-                    <label htmlFor="name">
-                        名前<span className="required">*</span>
+                    <label htmlFor="name" className={styles.label}>
+                        名前<span className={styles.required}>*</span>
                     </label>
                     <input
                         type="text"
@@ -70,10 +70,11 @@ const Contact = () => {
                         onChange={(e: ChangeEvent<HTMLInputElement>) =>
                             setName(e.target.value)
                         }
+                        className={styles.input}
                     />
 
-                    <label htmlFor="email">
-                        メールアドレス<span className="required">*</span>
+                    <label htmlFor="email" className={styles.label}>
+                        メールアドレス<span className={styles.required}>*</span>
                     </label>
                     <input
                         type="email"
@@ -84,10 +85,12 @@ const Contact = () => {
                         onChange={(e: ChangeEvent<HTMLInputElement>) =>
                             setEmail(e.target.value)
                         }
+                        className={styles.input}
                     />
 
-                    <label htmlFor="message">
-                        お問い合わせ内容<span className="required">*</span>
+                    <label htmlFor="message" className={styles.label}>
+                        お問い合わせ内容
+                        <span className={styles.required}>*</span>
                     </label>
                     <textarea
                         id="message"
@@ -98,15 +101,18 @@ const Contact = () => {
                         onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
                             setMessage(e.target.value)
                         }
+                        className={styles.textarea}
                     />
-                    <button type="submit">送信</button>
+                    <button type="submit" className={styles.submit_btn}>
+                        送信
+                    </button>
                 </form>
                 {/* モーダル */}
                 {showConfirmModal && (
-                    <div className="modal-overlay">
+                    <div className={styles.modal_overlay}>
                         {" "}
                         {/* オーバーレイの追加 */}
-                        <div className="confirm-modal">
+                        <div className={styles.confirm_modal}>
                             <h2>内容確認</h2>
                             <p>名前: {name}</p>
                             <p>メールアドレス: {email}</p>

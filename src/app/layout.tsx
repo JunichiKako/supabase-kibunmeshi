@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
 import Sidebar from "./_components/SideBar/Sidebar";
 import Footer from "./_components/Footer/Footer";
 import Favicon from "/public/images/common/favicon.ico";
+// 全体のスタイルを適用
+import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 

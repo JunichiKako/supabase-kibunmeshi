@@ -1,10 +1,10 @@
 import React from "react";
-import "./Footer.css";
+import styles from "./Footer.module.css";
 
 const Footer = () => {
     return (
-        <footer>
-            <p>@2024 kibunmeshi</p>
+        <footer className={styles.footer}>
+            <p className={styles.footer_text}>@2024 kibunmeshi</p>
         </footer>
     );
 };

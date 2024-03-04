@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useState, FormEvent } from "react";
-import "./form.css";
+import styles from "./Login.module.css";
 
 export default function LoginForm() {
     const [email, setEmail] = useState("");
@@ -21,35 +21,40 @@ export default function LoginForm() {
     };
 
     return (
-        <div className="form-container">
-            <div className="form-header">ログイン</div>
-            <form className="login-form" onSubmit={handleSubmit}>
+        <div className={styles.form_container}>
+            <div className={styles.formh_eader}>ログイン</div>
+            <form className={styles.login_form} onSubmit={handleSubmit}>
                 {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
-                <div className="form-group">
-                    <label htmlFor="email">メールアドレス</label>
+                <div className={styles.form_group}>
+                    <label htmlFor="email" className={styles.form_label}>
+                        メールアドレス
+                    </label>
                     <input
                         type="email"
                         id="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
+                        className={styles.form_input}
                     />
                 </div>
-                <div className="form-group">
-                    <label htmlFor="password">パスワード</label>
+                <div className={styles.form_group}>
+                    <label htmlFor="password" className={styles.form_label}>
+                        パスワード
+                    </label>
                     <input
                         type="password"
                         id="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                        className={styles.form_input}
                     />
                 </div>
-                <div className="form-group-button">
-                    <button type="submit" className="form-button">
+                <div className={styles.form_group_button}>
+                    <button type="submit" className={styles.form_button}>
                         ログイン
                     </button>
                 </div>
             </form>
         </div>
-        
     );
 }

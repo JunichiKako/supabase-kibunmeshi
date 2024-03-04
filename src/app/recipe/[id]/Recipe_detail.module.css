@@ -1,6 +1,4 @@
-
-
-.recipe-header {
+.recipe_header {
     max-width: 700px;
     margin: 0 auto;
     padding-top: 90px;
@@ -12,54 +10,49 @@
     gap: 30px;
 }
 
-.category-title {
+.recipe_title {
+    font-size: 1.75rem;
+    font-weight: 500;
+}
+
+.category_title {
     color: #000;
     padding: 6px;
     border-radius: 5px;
 }
 
-.recipe-title {
-    font-size: 1.75rem;
-    font-weight: 500;
-}
-
 .thumbnail {
     max-width: 700px !important;
-    margin: 0 auto !important
+    margin: 0 auto !important;
 }
 
-.thumbnail img {
+.thumbnail_img {
     border-radius: 8px;
     aspect-ratio: 15 / 9;
     object-fit: cover;
 }
 
-.material-title {
+/* .material-title {
     margin: 60px auto 0 auto;
     font-size: 24px;
     border-bottom: 2px solid #f3bb01;
     max-width: 700px;
     padding-bottom: 10px;
-}
+} */
 
-.recipe-material {
+.recipe_material {
     max-width: 700px;
     margin: 0 auto;
 }
 
-.recipe-step {
-    max-width: 700px;
-    margin: 0 auto;
-}
-
-.material-list li {
+.material_item {
     display: flex;
     justify-content: space-between;
     position: relative;
     padding: 16px;
 }
 
-.material-list li::before {
+.material_item::before {
     content: "";
     position: absolute;
     left: 0;
@@ -69,7 +62,14 @@
     background-color: #dfdfdf;
 }
 
-.step-content li {
+
+
+.recipe_step {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.step_list {
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
@@ -78,7 +78,7 @@
     position: relative;
 }
 
-.step-content li::before {
+.step_list::before {
     content: "";
     position: absolute;
     left: 0;
@@ -89,7 +89,7 @@
     border-radius: 8px;
 }
 
-.step-content-mark {
+.step_content_mark {
     background-color: #f3bb01;
     color: #fff;
     padding: 8px;
@@ -99,13 +99,12 @@
 }
 
 @media screen and (max-width: 768px) {
-
-    .recipe-header {
+    .recipe_header {
         flex-direction: column;
         gap: 10px;
     }
 
-    .recipe-title {
+    .recipe_title {
         font-size: 1.5rem;
     }
 
@@ -113,16 +112,16 @@
         max-width: 100%;
     }
 
-    .material-title {
+    .material_title {
         margin: 30px auto 0 auto;
         font-size: 20px;
     }
 
-    .recipe-material {
+    .recipe_material {
         max-width: 100%;
     }
 
-    .recipe-step {
+    .recipe_step {
         max-width: 100%;
     }
 }

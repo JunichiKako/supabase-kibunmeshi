@@ -3,12 +3,12 @@
 import MenuBtn from "@/app/_components/MenuBtn/MenuBtn";
 import React from "react";
 import { useEffect, useState } from "react";
-import { RecipeData } from "../../types/recipe";
+import { Recipe } from "../../types/recipe";
 import Link from "next/link";
 import styles from "./adminRecipeList.module.css";
 
 const Page = () => {
-    const [recipes, setRecipes] = useState<RecipeData[]>([]);
+    const [recipes, setRecipes] = useState<Recipe[]>([]);
 
     useEffect(() => {
         const fetcher = async () => {

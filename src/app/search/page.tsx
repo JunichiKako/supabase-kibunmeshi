@@ -3,8 +3,6 @@
 import React, { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import "../main.css";
-import "./search.css";
 import Image from "next/image";
 import SearchRecipe from "../_components/SearchRecipe/SearchRecipe";
 import Loading from "../_components/Loading/Loading";

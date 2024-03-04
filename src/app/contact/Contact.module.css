@@ -1,23 +1,17 @@
-
-
-/* タイトルは共通 */
-
-.contact-title {
+.contact_title {
     text-align: center;
     font-size: 24px;
     margin-bottom: 50px;
 }
 
-/* お問い合わせ */
-
-.contact-container {
+.contact_container {
     max-width: 600px;
     padding: 20px;
     border-radius: 5px;
     margin: 0 auto;
 }
 
-form label {
+.label {
     display: block;
     margin-top: 10px;
     text-align: left;
@@ -28,10 +22,7 @@ form label {
     margin-left: 3px;
 }
 
-form input[type="text"],
-form input[type="tel"],
-form input[type="email"],
-form textarea {
+.input {
     width: 100%;
     padding: 10px;
     margin-top: 5px;
@@ -41,11 +32,18 @@ form textarea {
     background-color: #fff;
 }
 
-form textarea {
+.textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    background-color: #fff;
     min-height: 200px;
 }
 
-form button {
+.submit_btn {
     display: block;
     width: 20%;
     margin: 15px auto;
@@ -57,18 +55,16 @@ form button {
     cursor: pointer;
 }
 
-form button:hover {
+.submit_btn:hover {
     background-color: #0056b3;
 }
 
 @media screen and (max-width: 950px) {
-
-
     .contact-container {
         max-width: 79%;
     }
 
-    form button {
+    .submit_btn {
         width: 30%;
     }
 }
@@ -78,7 +74,7 @@ form button:hover {
         max-width: 90%;
     }
 
-    form button {
+    .submit_btn {
         width: 40%;
     }
 }
@@ -88,7 +84,7 @@ form button:hover {
         max-width: 100%;
     }
 
-    form button {
+    .submit_btn {
         width: 50%;
     }
 }

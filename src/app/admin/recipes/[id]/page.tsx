@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import RecipeForm from "../components/RecipeForm";
-import { Material, RecipeData } from "../../../types/recipe";
+import { Material, Recipe } from "../../../types/recipe";
 
 const CreateRecipeForm: React.FC = () => {
     const [title, setTitle] = useState("");
@@ -52,7 +52,7 @@ const CreateRecipeForm: React.FC = () => {
     useEffect(() => {
         const fetcher = async () => {
             const res = await fetch(`/api/admin/recipes/${id}`);
-            const { recipe }: { recipe: RecipeData } = await res.json();
+            const { recipe }: { recipe: Recipe } = await res.json();
             setTitle(recipe.title);
             setThumbnailUrl(recipe.thumbnailUrl);
             setCategoryId(recipe.categoryId);

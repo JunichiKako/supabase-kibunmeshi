@@ -1,0 +1,149 @@
+/* --------------------------
+    side-bar-header
+-------------------------- */
+
+.header {
+    position: fixed;
+    min-width: 200px;
+    height: 220px;
+    text-align: center;
+    z-index: 200;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.logo_img {
+    width: 150px;
+    height: auto;
+}
+
+/* --------------------------
+    side-bar
+-------------------------- */
+
+.sidebar {
+    padding-top: 120px;
+    min-width: 200px;
+    height: 100%;
+    position: fixed;
+    color: #fff;
+    text-align: center;
+    z-index: 100;
+    background: #f3bb01;
+}
+
+.sidebar_nav {
+    height: 100%;
+    border-radius: 8px;
+    margin-top: 100px;
+    padding-top: 50px;
+}
+
+.sub_menu_home,
+.sub_menu_head,
+.sub_menu_contact {
+    color: #333;
+    text-decoration: none;
+    display: block;
+    padding: 20px 0;
+    transition: background-color 0.3s linear;
+}
+
+.sub_menu_home:hover,
+.sub_menu_head:hover,
+.sub_menu_contact:hover {
+    color: #fff;
+    opacity: 0.9;
+}
+
+/* 初期状態で非表示 */
+.navToggle {
+    display: none; /* デフォルトでは非表示 */
+}
+
+@media screen and (max-width: 950px) {
+    .header {
+        width: 100%;
+        height: 60px;
+        padding-top: 16px;
+        background: #f3bb01;
+        border-bottom: 2px solid #fff;
+    }
+
+    .sidebar {
+        /*display: none;*/
+        background-color: #fff;
+        position: fixed;
+        opacity: 0.9;
+        top: 0;
+        left: 0; /* サイドバーを画面の左端から表示 */
+        transform: translateX(-100%); /* 初期状態ではサイドバーを左に隠す */
+        height: 100%;
+        width: 100%;
+        transition: 0.35s ease-in-out;
+        padding-top: 0;
+    }
+
+    .open .sidebar {
+        transform: translateX(0); /* サイドバーを表示 */
+    }
+
+    .sidebar_nav {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: #fff;
+        border-radius: 0;
+        margin-top: 120px;
+    }
+
+    .sidebar_list {
+        padding: 18px 0;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .navToggle {
+        display: block; /* 画面幅が950px以下の場合に表示 */
+        cursor: pointer;
+        width: 32px;
+        height: 25px;
+        position: fixed;
+        top: 22px;
+        right: 20px;
+        z-index: 300;
+        transition: transform 0.35s ease-in-out;
+        
+    }
+    /* トグルバーの各バーのスタイル */
+    .navToggleSpan {
+        display: block;
+        width: 100%;
+        height: 4px;
+        background: #333;
+        margin-bottom: 6px;
+        transition: all 0.35s ease-in-out;
+    }
+
+    .navToggleSpan:last-child {
+        margin-bottom: 0;
+    }
+    /* メニューが開いた時のnav toggleのスタイル変更 */
+    .open .navToggleSpan:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 7px);
+    }
+
+    .open .navToggleSpan:nth-child(2) {
+        opacity: 0;
+    }
+
+    .open .navToggleSpan:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -8px);
+    }
+}
+
+@media screen and (max-width: 768px) {
+}

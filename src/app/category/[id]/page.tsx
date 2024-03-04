@@ -1,13 +1,12 @@
 "use client";
 
-import "./category.css";
-
 import React, { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { Recipe } from "../../types/recipe";
 import Link from "next/link";
 import Loading from "@/app/_components/Loading/Loading";
 import Image from "next/image";
+import styles from "./Category.module.css";
 
 const CategoryList = () => {
     const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -52,8 +51,6 @@ const CategoryList = () => {
         return <div>No recipes found for this category</div>;
     }
 
-
-
     // カテゴリー名に基づいて背景色をマッピング
     const categoryStyles: Record<
         string,
@@ -72,23 +69,37 @@ const CategoryList = () => {
     };
 
     return (
-        <div className="recipes-list">
-            {recipes.map((recipe) => (
-                <div key={recipe.id} className="recipe-item">
-                    <Link href={`/recipe/${recipe.id}`}>
-                        {recipe.thumbnailUrl && (
-                            <Image
-                                src={recipe.thumbnailUrl}
-                                alt={recipe.title}
-                                width={300}
-                                height={200}
-                                layout="responsive"
-                            />
-                        )}
-                        <h3>{recipe.title}</h3>
-                    </Link>
-                </div>
-            ))}
+        <div>
+            <div>
+                <h2
+                    style={{
+                        backgroundColor: style.backgroundColor,
+                        color: style.color,
+                    }}
+                    className={styles.category_title}
+                >
+                    {categoryName}
+                </h2>
+            </div>
+            <div className="new-content grid">
+                {recipes?.map((recipe) => (
+                    <div key={recipe.id} className="item">
+                        <Link href={`/recipe/${recipe.id}`}>
+                            {recipe.thumbnailUrl && (
+                                <Image
+                                    src={recipe.thumbnailUrl}
+                                    alt={recipe.title}
+                                    width={300}
+                                    height={200}
+                                    priority={true}
+                                    style={{ objectFit: "cover" }}
+                                />
+                            )}
+                            <p>{recipe.title}</p>
+                        </Link>
+                    </div>
+                ))}
+            </div>
         </div>
     );
 };

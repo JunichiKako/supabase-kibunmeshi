@@ -1,10 +1,11 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
-import { Category } from "../../types/recipe";
 import Loading from "../Loading/Loading";
-import Image from "next/image";
+import { Category } from "../../types/recipe";
+import styles from "./CategoryList.module.css";
 
 const CategoryList = () => {
     const [categories, setCategories] = useState<Category[]>([]);
@@ -40,38 +41,63 @@ const CategoryList = () => {
     }
 
     // カテゴリー画像の設定関数を修正
-    const img = (title: string): string => {
+    const getCategoryStyle = (title: string) => {
         switch (title) {
             case "あっさり":
-                return "/images/category/assari.png";
+                return {
+                    img: "/images/category/assari.png",
+                    className: styles.assari,
+                };
             case "さっぱり":
-                return "/images/category/sappari.png";
+                return {
+                    img: "/images/category/sappari.png",
+                    className: styles.sappari,
+                };
             case "ガッツリ":
-                return "/images/category/gatturi.png";
+                return {
+                    img: "/images/category/gatturi.png",
+                    className: styles.gatturi,
+                };
             case "ぱぱっと":
-                return "/images/category/papatto.png";
+                return {
+                    img: "/images/category/papatto.png",
+                    className: styles.papatto,
+                };
             default:
-                // ここでデフォルト画像のパスを返す
-                return "/images/category/default.png";
+                // デフォルトの画像とスタイルを返す
+                return {
+                    img: "/images/category/default.png",
+                    className: styles.default,
+                };
         }
     };
     return (
         <div id="category">
-            <div className="c-title">#Category</div>
-            <div className="category-content">
-                {categories.map((category) => (
-                    <div className="item" key={category.id}>
-                        <Link href={`/category/${category.id}`}>
-                            <Image
-                                src={img(category.name)}
-                                alt={category.name}
-                                width={300}
-                                height={200}
-                                priority={true}
-                            />
-                        </Link>
-                    </div>
-                ))}
+            <div className={styles.category_title}>#Category</div>
+            <div className={styles.category_content}>
+                {categories.map((category) => {
+                    // カテゴリー名に基づいて画像とスタイルを取得
+                    const { img: categoryImage, className: categoryClassName } =
+                        getCategoryStyle(category.name);
+
+                    return (
+                        <div className={categoryClassName} key={category.id}>
+                            <Link
+                                href={`/category/${category.id}`}
+                                className={styles.category_item}
+                            >
+                                <Image
+                                    src={categoryImage}
+                                    alt={category.name}
+                                    width={140}
+                                    height={150}
+                                    priority={true}
+                                    className={styles.category_image}
+                                />
+                            </Link>
+                        </div>
+                    );
+                })}
             </div>
         </div>
     );

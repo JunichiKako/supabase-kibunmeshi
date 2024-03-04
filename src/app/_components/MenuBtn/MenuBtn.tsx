@@ -1,12 +1,12 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import "./MenuBtn.css";
+import styles from "./MenuBtn.module.css";
 
 const MenuBtn = () => {
     return (
-        <header className="site-btn">
-            <Link href="/login" className="login-btn">
+        <header className={styles.site_btn}>
+            <Link href="/login" className={styles.login_btn}>
                 ログイン
                 <Image
                     src="/images/icons/login-icon.svg"
@@ -16,7 +16,7 @@ const MenuBtn = () => {
                     style={{ display: "block" }}
                 />
             </Link>
-            <Link href="/signup" className="singup-btn">
+            <Link href="/signup" className={styles.singup_btn}>
                 新規登録
                 <Image
                     src="/images/icons/register-icon.svg"
@@ -26,7 +26,7 @@ const MenuBtn = () => {
                     style={{ display: "block" }}
                 />
             </Link>
-            <Link href="/admin/recipes/new" className="singup-btn">
+            <Link href="/admin/recipes/new" className={styles.singup_btn}>
                 新規作成
                 <Image
                     src="/images/icons/register-icon.svg"

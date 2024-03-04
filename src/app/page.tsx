@@ -1,13 +1,18 @@
 "use client";
 
+// Next.js 各ページはこの並びで記述する
 import Link from "next/link";
+import Image from "next/image";
+// React
 import React, { useState, useEffect } from "react";
-import { Recipe } from "./types/recipe";
-import "./main.css";
+// Components
 import CategoryList from "./_components/CategoryList/CategoryList";
 import SearchRecipe from "./_components/SearchRecipe/SearchRecipe";
 import Loading from "./_components/Loading/Loading";
-import Image from "next/image";
+// typeScript
+import { Recipe } from "./types/recipe";
+// CSS
+import styles from "./Home.module.css";
 
 export default function Home() {
     const [recipeList, setRecipeList] = useState<Recipe[]>([]);
@@ -70,9 +75,9 @@ export default function Home() {
                 ))}
             </div>
 
-            <div className="recipe-all ">
+            <div className={styles.recipe_all}>
                 <Link href="/recipes">
-                    <div className="btn">レシピ一覧はこちらから</div>
+                    <div className={styles.recipe_all_btn}>レシピ一覧はこちらから</div>
                 </Link>
             </div>
 

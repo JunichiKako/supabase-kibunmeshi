@@ -1,3 +1,14 @@
+/* 
+基本的なスタイルに関してはここで定義します。
+ページやコンポーネントごとに異なるスタイルは、それぞれのファイルで
+Css Moduleで定義します。
+
+よって、class名は基本的には「globals.css」で定義したものを使いまわします。
+styles.module.cssで定義したものは、そのコンポーネント内でのみ有効です。
+*/
+
+/* リセットCSS */
+
 * {
     margin: 0;
     padding: 0;
@@ -24,9 +35,8 @@ li {
 /* メインコンテンツ */
 
 .main-content {
-    margin-top: 90px;
     margin-left: 200px;
-    padding: 0 46px;
+    padding: 90px 46px 0;
 }
 
 .main-content a:hover {
@@ -84,6 +94,8 @@ li {
     font-size: 0.775rem;
 }
 
+/* 共通スタイルのレスポンシブ */
+
 @media screen and (max-width: 950px) {
     .main-content {
         width: 100%;
@@ -94,12 +106,6 @@ li {
         grid-template-rows: repeat(3, 1fr);
         gap: 20px 10px;
         padding: 0 16px;
-    }
-
-    .rank-content {
-        grid-template-columns: repeat(1, 1fr);
-        grid-template-rows: repeat(1, 1fr);
-        gap: 40px 0;
     }
 
     .category-content {

@@ -2,104 +2,66 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import "./sidebar.css";
-import { client } from "@/libs/client";
-import { Category } from "../../types/recipe";
+import styles from "./Sidebar.module.css";
+
 import Image from "next/image";
 
 const Sidebar = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const [categories, setCategories] = useState<Category[]>([]); // カテゴリーの状態変数
     const [isLoading, setIsLoading] = useState(true); // ローディング状態変数
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
     };
 
-
-    // カテゴリー一覧
-    useEffect(() => {
-        async function fetchData() {
-            setIsLoading(true); // ローディング開始
-            try {
-                // APIからデータを取得
-                const response = await fetch("/api/categories");
-                const data = await response.json();
-                if (response.ok) {
-                    setCategories(data.categories); // APIのレスポンスに合わせて修正
-                } else {
-                    throw new Error(
-                        data.message || "データの取得に失敗しました"
-                    );
-                }
-            } catch (error) {
-                console.error("Fetching categories failed", error);
-            } finally {
-                setIsLoading(false); // ローディング終了
-            }
-        }
-
-        fetchData();
-    }, []);
-
     return (
-        <div className={`side-menu ${isOpen ? "open" : ""}`}>
-            <header className="header">
+        <div className={isOpen ? `${styles.open}` : ""}>
+            <header className={styles.header}>
                 <Link href="/">
-                    <h1 className="logo">
+                    <h1 className={styles.logo}>
                         <Image
                             src="/images/common/logo.png"
                             alt="ロゴ"
                             width={128}
                             height={77}
                             priority={true}
+                            className={styles.logo_img}
                         />
                     </h1>
                 </Link>
             </header>
 
-            <div id="nav-toggle" onClick={toggleMenu}>
-                <div>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
+            <div className={styles.navToggle} onClick={toggleMenu}>
+                <span className={styles.navToggleSpan}></span>
+                <span className={styles.navToggleSpan}></span>
+                <span className={styles.navToggleSpan}></span>
             </div>
 
-            <aside className="sidebar">
-                <nav className="sidebar-nav">
+            <aside className={styles.sidebar}>
+                <nav className={styles.sidebar_nav}>
                     <ul>
-                        <li>
+                        <li className={styles.sidebar_list}>
                             <Link
                                 href="/"
-                                className="sub-menu-home"
+                                className={styles.sub_menu_home}
                                 onClick={toggleMenu}
                             >
                                 ホーム
                             </Link>
                         </li>
-                        <li className="sub-menu">
+                        <li className={styles.sidebar_list}>
                             <Link
                                 href="#category"
-                                className="sub-menu-head"
+                                className={styles.sub_menu_head}
                                 onClick={toggleMenu}
                             >
                                 カテゴリ
                             </Link>
-                            <ul className="sub-menu-nav">
-                                {categories.map((category) => (
-                                    <li key={category.id}>
-                                        <Link href={`/category/${category.id}`}>
-                                            {category.name}
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
                         </li>
-                        <li>
+                        <li className={styles.sidebar_list}>
                             <Link
                                 href="/contact"
-                                className="sub-menu-contact"
+                                className={styles.sub_menu_contact}
                                 onClick={toggleMenu}
                             >
                                 Contact
