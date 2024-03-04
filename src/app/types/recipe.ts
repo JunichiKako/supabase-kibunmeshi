@@ -1,9 +1,9 @@
 export interface Material {
-    id: number;
+    id?: number;
     name: string;
     quantity: string;
-    createdAt: string;
-    updatedAt: string;
+    createdAt?: string;
+    updatedAt?: string;
 }
 
 export interface HowTo {

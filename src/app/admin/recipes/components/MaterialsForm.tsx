@@ -1,11 +1,7 @@
 // MaterialsForm.tsx
 import React from "react";
 import styles from "../new/CreateRecipeForm.module.css";
-
-type Material = {
-    name: string;
-    quantity: string;
-};
+import { Material } from "../../../types/recipe";
 
 type MaterialsFormProps = {
     materials: Material[];
