@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import { Recipe, Material, HowTo } from "../../../../types/recipe";
+import { getCurrentUser } from "@/utils/supabase";
 
 // PUTリクエストで受け取るリクエストボディの型を定義
 interface UpdateRecipeRequestBody {
@@ -17,6 +18,11 @@ export const GET = async (
     request: NextRequest,
     { params }: { params: { id: string } }
 ) => {
+    const { currentUser, error } = await getCurrentUser(request);
+
+    if (error)
+        return NextResponse.json({ status: error.message }, { status: 400 });
+
     const { id } = params;
 
     try {
@@ -49,10 +55,12 @@ export const PUT = async (
     request: NextRequest,
     { params }: { params: { id: string } } // ここでリクエストパラメータを受け取る
 ) => {
+    const { currentUser, error } = await getCurrentUser(request);
+
+    if (error)
+        return NextResponse.json({ status: error.message }, { status: 400 });
     // paramsの中にidが入っているので、それを取り出す
     const { id } = params;
-
-    // リクエストのbodyの型を定義
 
     // リクエストのbodyを取得
     const {
@@ -68,7 +76,7 @@ export const PUT = async (
             id: {
                 in: materials
                     .map((material) => material.id)
-                    .filter((id) => id !== undefined),
+                    .filter((id): id is number => id !== undefined),
             },
         },
     });
@@ -78,7 +86,7 @@ export const PUT = async (
             id: {
                 in: howTos
                     .map((howTo) => howTo.id)
-                    .filter((id) => id !== undefined),
+                    .filter((id): id is number => id !== undefined),
             },
         },
     });
@@ -94,13 +102,13 @@ export const PUT = async (
                 thumbnailUrl,
                 categoryId,
                 materials: {
-                    create: materials.map((material: any) => ({
+                    create: materials.map((material) => ({
                         name: material.name,
                         quantity: material.quantity,
                     })),
                 },
                 howTos: {
-                    create: howTos.map((howTo: any, index: any) => ({
+                    create: howTos.map((howTo, index) => ({
                         index: index,
                         text: howTo.text,
                     })),
@@ -127,6 +135,10 @@ export const DELETE = async (
     request: NextRequest,
     { params }: { params: { id: string } } // ここでリクエストパラメータを受け取る
 ) => {
+    const { currentUser, error } = await getCurrentUser(request);
+
+    if (error)
+        return NextResponse.json({ status: error.message }, { status: 400 });
     // paramsの中にidが入っているので、それを取り出す
     const { id } = params;
 

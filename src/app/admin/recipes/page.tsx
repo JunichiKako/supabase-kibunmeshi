@@ -6,19 +6,27 @@ import { useEffect, useState } from "react";
 import { Recipe } from "../../types/recipe";
 import Link from "next/link";
 import styles from "./adminRecipeList.module.css";
+import { useSupabaseSession } from "@/app/_hooks/useSupabaseSession";
 
 const Page = () => {
     const [recipes, setRecipes] = useState<Recipe[]>([]);
+    const { token } = useSupabaseSession();
 
     useEffect(() => {
+        if (!token) return;
         const fetcher = async () => {
-            const res = await fetch("/api/admin/recipes");
+            const res = await fetch("/api/admin/recipes", {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: token,
+                },
+            });
             const { recipes } = await res.json();
             setRecipes(recipes);
         };
 
         fetcher();
-    }, []);
+    }, [token]);
 
     // 日付をフォーマットする関数（例：2024-02-28T04:52:05.251Z -> 2024/02/28）
     const formatDate = (dateString: string) => {

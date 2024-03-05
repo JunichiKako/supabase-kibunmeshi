@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import RecipeForm from "../components/RecipeForm";
 import { Material } from "../../../types/recipe";
+import { useSupabaseSession } from '@/app/_hooks/useSupabaseSession'
 
 const CreateRecipeForm: React.FC = () => {
     const [title, setTitle] = useState("");
@@ -16,6 +17,7 @@ const CreateRecipeForm: React.FC = () => {
     ]);
     const [howTos, setHowTos] = useState<{ text: string }[]>([{ text: "" }]);
     const router = useRouter();
+    const { token } = useSupabaseSession();
 
     const handleSubmit = async (e: React.FormEvent<Element>) => {
         // フォーム送信処理...
@@ -24,6 +26,7 @@ const CreateRecipeForm: React.FC = () => {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                Authorization: token!,
             },
             body: JSON.stringify({
                 title,

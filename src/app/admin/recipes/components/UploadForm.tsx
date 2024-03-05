@@ -17,11 +17,7 @@ const UploadForm: React.FC<UploadFormProps> = ({
         if (url) {
             setThumbnailUrl(url);
         } else {
-            // URLがnullの場合、ここで何らかのデフォルト処理を行うか、
-            // 空文字列や特定のデフォルトURLを設定することもできます。
-            // この例では、単純に関数を終了させています。
-            // setThumbnailUrl(''); // 空文字列を設定する場合
-            return; // 何もしない
+            return; 
         }
     };
     const handleThumbnailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,9 +33,10 @@ const UploadForm: React.FC<UploadFormProps> = ({
     return (
         <div className={styles.thumbnailContainer}>
             <div className={styles.thumbnailInputContainer}>
-                <label>サムネイル画像:</label>
+                <label htmlFor="thumnailImageKey">サムネイル画像:</label>
                 <input
                     type="file"
+                    id="thumnailImageKey"
                     accept="image/*"
                     onChange={handleThumbnailChange}
                     className={styles.inputField}

@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import RecipeForm from "../components/RecipeForm";
 import { Material, Recipe } from "../../../types/recipe";
+import { useSupabaseSession } from "@/app/_hooks/useSupabaseSession";
 
 const CreateRecipeForm: React.FC = () => {
     const [title, setTitle] = useState("");
@@ -13,6 +14,7 @@ const CreateRecipeForm: React.FC = () => {
     const [howTos, setHowTos] = useState<{ text: string }[]>([{ text: "" }]);
     const router = useRouter();
     const { id } = useParams();
+    const { token } = useSupabaseSession();
 
     const handleSubmit = async (e: React.FormEvent<Element>) => {
         // フォーム送信処理...
@@ -23,15 +25,14 @@ const CreateRecipeForm: React.FC = () => {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
+                Authorization: token!,
             },
             body: JSON.stringify({
                 title,
                 thumbnailUrl,
                 categoryId,
                 materials,
-                howTos:{
-                    
-                },
+                howTos: {},
             }),
         });
         alert("レシピを更新しました！");
@@ -42,6 +43,10 @@ const CreateRecipeForm: React.FC = () => {
 
         await fetch(`/api/admin/recipes/${id}`, {
             method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: token!,
+            },
         });
 
         alert("記事を削除しました。");
@@ -50,8 +55,14 @@ const CreateRecipeForm: React.FC = () => {
     };
 
     useEffect(() => {
+        if (!token) return;
         const fetcher = async () => {
-            const res = await fetch(`/api/admin/recipes/${id}`);
+            const res = await fetch(`/api/admin/recipes/${id}`, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: token,
+                },
+            });
             const { recipe }: { recipe: Recipe } = await res.json();
             setTitle(recipe.title);
             setThumbnailUrl(recipe.thumbnailUrl);
@@ -61,7 +72,7 @@ const CreateRecipeForm: React.FC = () => {
         };
 
         fetcher();
-    }, [id]);
+    }, [id, token]);
 
     // マテリアルの変更を扱う関数
     const handleMaterialChange = (

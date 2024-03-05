@@ -1,13 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
-import { RecipeData } from "../../../types/recipe";
+import { Recipe } from "../../../types/recipe";
+import { getCurrentUser } from "@/utils/supabase";
 
 const prisma = new PrismaClient();
 
 // レシピ投稿のAPI
-export const POST = async (req: NextRequest) => {
+export const POST = async (request: NextRequest) => {
+    const { currentUser, error } = await getCurrentUser(request);
+
+    if (error) {
+        return NextResponse.json({ status: error.message }, { status: 400 });
+    }
+
     try {
-        const body: RecipeData = await req.json();
+        const body: Recipe = await request.json();
         const { title, thumbnailUrl, categoryId, materials, howTos } = body;
 
         // categoryId の検証
@@ -57,6 +64,11 @@ export const POST = async (req: NextRequest) => {
 
 // 管理者画面のレシピ一覧取得のAPI
 export const GET = async (request: NextRequest) => {
+    const { currentUser, error } = await getCurrentUser(request);
+
+    if (error) {
+        return NextResponse.json({ status: error.message }, { status: 400 });
+    }
     try {
         const recipes = await prisma.recipe.findMany({
             include: {
@@ -68,6 +80,8 @@ export const GET = async (request: NextRequest) => {
                 createdAt: "desc",
             },
         });
+
+        await prisma.$disconnect();
 
         return NextResponse.json(
             { status: "OK", recipes: recipes },
