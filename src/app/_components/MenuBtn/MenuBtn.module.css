@@ -1,25 +1,21 @@
-.site_btn {
+.site_container {
     display: flex;
     align-items: center; /* 子要素を中央揃えにする */
     justify-content: flex-end;
-}
-
-.site_btn a {
-    color: #fff;
-    font-weight: 600;
     text-decoration: none;
-    font-size: 14px;
-    padding: 7px 20px;
-    border-radius: 5px;
-    transition: background-color 0.2s, color 0.2s;
 }
 
 .login_btn,
-.singup_btn {
+.signup_btn,
+.logout_btn,
+.new_btn,
+.account_btn {
     display: flex;
     align-items: center; /* アイコンとテキストを中央揃えにする */
     gap: 6px; /* アイコンとテキストの間にスペースを追加 */
     color: #fff;
+    padding: 8px 20px;
+    border-radius: 8px;
 }
 
 .login_btn {
@@ -27,7 +23,24 @@
     margin-right: 20px;
 }
 
-.singup_btn {
+.signup_btn {
     background-color: #58a4b0;
+    margin-right: 20px;
+}
+
+.new_btn {
+    background-color: #e26d5c;
+    margin-right: 20px;
+}
+
+.logout_btn {
+    outline: none;
+    border: none;
+    background-color: #210203;
+    margin-right: 20px;
+}
+
+.account_btn {
+    background-color: #048ba8;
     margin-right: 20px;
 }

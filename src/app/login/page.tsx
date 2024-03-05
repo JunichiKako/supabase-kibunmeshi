@@ -2,22 +2,29 @@
 
 import React from "react";
 import { useState, FormEvent } from "react";
+import { useRouter } from "next/navigation";
+import { supabase } from "@/utils/supabase";
 import styles from "./Login.module.css";
 
 export default function LoginForm() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
+    const router = useRouter();
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        // 簡単なバリデーション
-        if (!email || !password) {
-            setErrorMessage("メールアドレスとパスワードを入力してください");
-            return;
+        const { error } = await supabase.auth.signInWithPassword({
+            email,
+            password,
+        });
+
+        if (error) {
+            alert("ログインに失敗しました");
+        } else {
+            router.replace("/admin/recipes");
         }
-        setErrorMessage("");
     };
 
     return (
