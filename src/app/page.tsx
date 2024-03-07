@@ -72,7 +72,7 @@ export default function Home() {
         if (recipeList.length > 0) {
             fetchRecipeImages();
         }
-    }, [recipeList]);
+    }, [recipeList, thumbnailImageUrl]);
 
     if (loading) {
         return <Loading />;
