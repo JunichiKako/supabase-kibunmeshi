@@ -30,7 +30,7 @@ const CategoryList = () => {
         }
 
         fetchData();
-    }, [categories]);
+    }, []);
 
     if (categoriesLoading) {
         return <Loading />;
