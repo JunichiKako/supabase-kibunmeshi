@@ -29,7 +29,7 @@ export default function LoginForm() {
 
     return (
         <div className={styles.form_container}>
-            <div className={styles.formh_eader}>ログイン</div>
+            <div className={styles.form_header}>ログイン</div>
             <form className={styles.login_form} onSubmit={handleSubmit}>
                 {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
                 <div className={styles.form_group}>
