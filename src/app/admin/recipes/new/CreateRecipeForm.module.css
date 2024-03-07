@@ -47,8 +47,8 @@
 .thumbnailPreview {
     width: 288px; /* プレビュー画像の幅 */
     height: auto; /* 高さは自動で調整 */
-    border: 1px solid #ccc; /* 枠線をつける */
     border-radius: 4px; /* 角を丸くする */
+    object-fit: cover;
 }
 /* サムネイルアップロードフィールドのコンテナ */
 .thumbnailInputContainer {

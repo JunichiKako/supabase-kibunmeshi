@@ -3,6 +3,7 @@ import styles from "../new/CreateRecipeForm.module.css";
 import { supabase } from "@/utils/supabase";
 import { v4 as uuidv4 } from "uuid";
 import { useState, ChangeEvent, useEffect } from "react";
+import Image from "next/image";
 
 type UploadFormProps = {
     thumbnailImageKey: string | null;
@@ -79,11 +80,14 @@ const UploadForm: React.FC<UploadFormProps> = ({
                 />
             </div>
             {thumbnailImageUrl && (
-                <div>
-                    <img
+                <div className={styles.thumbnailPreview}>
+                    <Image
                         src={thumbnailImageUrl}
                         alt="サムネイルプレビュー"
-                        className={styles.thumbnailPreview}
+                        width={288} // 適切なサイズに設定する
+                        height={288} // 適切なサイズに設定する
+                        layout="responsive"
+                        style={{borderRadius: "10px"}}
                     />
                 </div>
             )}
