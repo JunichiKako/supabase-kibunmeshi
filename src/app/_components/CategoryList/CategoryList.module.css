@@ -21,11 +21,13 @@
 /*  カテゴリーによって、背景色を変更する */
 
 .assari {
-    background-color: #201e64; /* 例: あっさりの背景色 */
+    background-color: #a7d1d1;
+    /* 例: あっさりの背景色 */
 }
 
 .sappari {
-    background-color: #a7d1d1; /* 例: さっぱりの背景色 */
+    background-color: #ffb700;
+    /* 例: さっぱりの背景色 */
 }
 
 .gatturi {
@@ -33,7 +35,7 @@
 }
 
 .papatto {
-    background-color: #ffb700; /* 例: ぱぱっとの背景色 */
+    background-color: #201e64; /* 例: ぱぱっとの背景色 */
 }
 
 .default {

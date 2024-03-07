@@ -39,7 +39,6 @@ const Page = () => {
     };
     return (
         <div>
-            <MenuBtn />
             <h2>管理者用レシピページ</h2>
             <ul className={styles.list}>
                 {recipes.map((recipe) => (

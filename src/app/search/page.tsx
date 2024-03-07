@@ -7,13 +7,17 @@ import Image from "next/image";
 import SearchRecipe from "../_components/SearchRecipe/SearchRecipe";
 import Loading from "../_components/Loading/Loading";
 import { Recipe } from "../types/recipe";
-
+import { supabase } from "../../utils/supabase";
 
 const Search: React.FC = () => {
     const searchParams = useSearchParams();
     const word = searchParams.get("word");
     const [searchResults, setSearchResults] = useState<Recipe[]>([]);
     const [loading, setLoading] = useState(false);
+    // レシピIDをキー、サムネイル画像URLを値とするオブジェクトの状態を用意
+    const [thumbnailImageUrl, setThumbnailImageUrl] = useState<{
+        [key: number]: string;
+    }>({});
 
     useEffect(() => {
         const handleSearch = async () => {
@@ -27,7 +31,6 @@ const Search: React.FC = () => {
                 const data = await response.json();
 
                 console.log(data);
-                
 
                 if (response.ok) {
                     setSearchResults(data);
@@ -46,6 +49,21 @@ const Search: React.FC = () => {
         handleSearch();
     }, [word]);
 
+    // DBに保存しているthumbnailImageKeyを元に、Supabaseから画像のURLを取得する
+    useEffect(() => {
+        searchResults.forEach(async (recipe) => {
+            const {
+                data: { publicUrl },
+            } = await supabase.storage
+                .from("recipe_thumbnail")
+                .getPublicUrl(recipe.thumbnailImageKey);
+            setThumbnailImageUrl((prev) => ({
+                ...prev,
+                [recipe.id]: publicUrl,
+            }));
+        });
+    }, [searchResults]);
+
     if (loading) {
         return <Loading />; // ローディングコンポーネントを表示
     }
@@ -54,13 +72,13 @@ const Search: React.FC = () => {
         <div>
             <SearchRecipe />
             {/* 検索結果の表示 */}
-            <div className="search-results">
+            <div className="search-results new-content grid">
                 {searchResults.slice(0, 6).map((recipe) => (
                     <div key={recipe.id} className="item">
                         <Link href={`/recipe/${recipe.id}`}>
-                            {recipe.thumbnailUrl && (
+                            {thumbnailImageUrl && (
                                 <Image
-                                    src={recipe.thumbnailUrl}
+                                    src={thumbnailImageUrl[recipe.id]}
                                     alt={recipe.title}
                                     layout="fill"
                                 />

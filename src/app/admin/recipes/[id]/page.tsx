@@ -8,7 +8,7 @@ import { useSupabaseSession } from "@/app/_hooks/useSupabaseSession";
 
 const CreateRecipeForm: React.FC = () => {
     const [title, setTitle] = useState("");
-    const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(null);
+    const [thumbnailImageKey, setThumbnailImageKey] = useState<string | null>(null);
     const [categoryId, setCategoryId] = useState<number>(0);
     const [materials, setMaterials] = useState([{ name: "", quantity: "" }]);
     const [howTos, setHowTos] = useState<{ text: string }[]>([{ text: "" }]);
@@ -29,7 +29,7 @@ const CreateRecipeForm: React.FC = () => {
             },
             body: JSON.stringify({
                 title,
-                thumbnailUrl,
+                thumbnailImageKey,
                 categoryId,
                 materials,
                 howTos: {},
@@ -63,9 +63,11 @@ const CreateRecipeForm: React.FC = () => {
                     Authorization: token,
                 },
             });
+            console.log(res);
+            
             const { recipe }: { recipe: Recipe } = await res.json();
             setTitle(recipe.title);
-            setThumbnailUrl(recipe.thumbnailUrl);
+            setThumbnailImageKey(recipe.thumbnailImageKey);
             setCategoryId(recipe.categoryId);
             setMaterials(recipe.materials);
             setHowTos(recipe.howTos);
@@ -127,8 +129,8 @@ const CreateRecipeForm: React.FC = () => {
                 mode="edit"
                 title={title}
                 setTitle={setTitle}
-                thumbnailUrl={thumbnailUrl}
-                setThumbnailUrl={setThumbnailUrl}
+                thumbnailImageKey={thumbnailImageKey}
+                setThumbnailImageKey={setThumbnailImageKey}
                 categoryId={categoryId}
                 setCategoryId={setCategoryId}
                 materials={materials}

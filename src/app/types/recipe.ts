@@ -24,7 +24,7 @@ export interface Category {
 export interface Recipe {
     id: number;
     title: string;
-    thumbnailUrl: string;
+    thumbnailImageKey: string;
     categoryId: number;
     createdAt: string;
     updatedAt: string;

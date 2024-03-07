@@ -7,12 +7,16 @@ import Link from "next/link";
 import Loading from "@/app/_components/Loading/Loading";
 import Image from "next/image";
 import styles from "./Category.module.css";
+import { supabase } from "../../../utils/supabase";
 
 const CategoryList = () => {
     const [recipes, setRecipes] = useState<Recipe[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
     const [categoryName, setCategoryName] = useState(""); // カテゴリー名を状態として追加
+    const [thumbnailImageUrl, setThumbnailImageUrl] = useState<{
+        [key: number]: string;
+    }>({});
 
     const { id } = useParams();
 
@@ -38,6 +42,34 @@ const CategoryList = () => {
 
         fetchRecipes();
     }, [id]);
+
+    useEffect(() => {
+        // 各レシピのサムネイルURLを保持するためのオブジェクト
+    
+        const fetcher = async () => {
+            // Promise.allを使用して、すべてのレシピのサムネイルURLを非同期に取得
+            await Promise.all(recipes.map(async (recipe) => {
+                if (recipe.thumbnailImageKey) {
+                    const { data } = await supabase.storage
+                        .from("recipe_thumbnail")
+                        .getPublicUrl(recipe.thumbnailImageKey);
+
+                    // サムネイルURLをオブジェクトに追加
+                    setThumbnailImageUrl((prev) => ({
+                        ...prev,
+                        [recipe.id]: data.publicUrl,
+                    }));
+                }
+            }));
+    
+
+        };
+    
+        if (recipes.length > 0) {
+            fetcher();
+        }
+    }, [recipes]);
+    
 
     if (loading) {
         return <Loading />;
@@ -85,9 +117,9 @@ const CategoryList = () => {
                 {recipes?.map((recipe) => (
                     <div key={recipe.id} className="item">
                         <Link href={`/recipe/${recipe.id}`}>
-                            {recipe.thumbnailUrl && (
+                            {thumbnailImageUrl && (
                                 <Image
-                                    src={recipe.thumbnailUrl}
+                                    src={thumbnailImageUrl[recipe.id]}
                                     alt={recipe.title}
                                     width={300}
                                     height={200}

@@ -19,6 +19,8 @@ const CategoryList = () => {
                 const data = await response.json();
 
                 setCategories(data.categories);
+
+                
             } catch (error) {
                 setCategoriesError(
                     error instanceof Error

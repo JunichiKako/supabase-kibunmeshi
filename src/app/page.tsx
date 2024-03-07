@@ -13,14 +13,18 @@ import Loading from "./_components/Loading/Loading";
 import { Recipe } from "./types/recipe";
 // CSS
 import styles from "./Home.module.css";
+import { supabase } from "../utils/supabase";
 
 export default function Home() {
     const [recipeList, setRecipeList] = useState<Recipe[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
+    const [thumbnailImageUrl, setThumbnailImageUrl] = useState<{
+        [key: number]: string;
+    }>({});
 
     // レシピ一覧の取得
-    useEffect(() => {
+    useEffect(() => { setThumbnailImageUrl
         async function fetchData() {
             try {
                 const response = await fetch("/api/recipes");
@@ -42,6 +46,35 @@ export default function Home() {
         fetchData();
     }, []);
 
+    console.log(recipeList);
+
+    // DBに保存しているthumbnailImageKeyを元に、Supabaseから画像のURLを取得する
+    useEffect(() => {
+        async function fetchRecipeImages() {
+            const newImageUrls = { ...thumbnailImageUrl }; // 現在の状態をコピー
+
+            await Promise.all(
+                recipeList.map(async (recipe) => {
+                    if (recipe.thumbnailImageKey) {
+                        const { data } = await supabase.storage
+                            .from("recipe_thumbnail")
+                            .getPublicUrl(recipe.thumbnailImageKey);
+
+                        if (data.publicUrl) {
+                            newImageUrls[recipe.id] = data.publicUrl;
+                        }
+                    }
+                })
+            )
+
+             setThumbnailImageUrl(newImageUrls); // 新しいURLマップで状態を更新
+        }
+
+        if (recipeList.length > 0) {
+            fetchRecipeImages();
+        }
+    }, [recipeList]);
+
     if (loading) {
         return <Loading />;
     }
@@ -57,9 +90,9 @@ export default function Home() {
                 {recipeList.map((recipe) => (
                     <div key={recipe.id} className="item">
                         <Link href={`/recipe/${recipe.id}`}>
-                            {recipe.thumbnailUrl ? (
+                            {thumbnailImageUrl[recipe.id] ? (
                                 <Image
-                                    src={recipe.thumbnailUrl}
+                                    src={thumbnailImageUrl[recipe.id]}
                                     alt={recipe.title}
                                     width={300}
                                     height={200}
@@ -77,7 +110,9 @@ export default function Home() {
 
             <div className={styles.recipe_all}>
                 <Link href="/recipes">
-                    <div className={styles.recipe_all_btn}>レシピ一覧はこちらから</div>
+                    <div className={styles.recipe_all_btn}>
+                        レシピ一覧はこちらから
+                    </div>
                 </Link>
             </div>
 

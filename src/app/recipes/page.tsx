@@ -6,6 +6,7 @@ import Loading from "../_components/Loading/Loading";
 import { Recipe } from "../types/recipe";
 import Image from "next/image";
 import styles from "./Recipes.module.css";
+import { supabase } from "../../utils/supabase";
 
 export default function Recipes() {
     const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -13,6 +14,11 @@ export default function Recipes() {
     const [error, setError] = useState<Error | null>(null);
     const [currentPage, setCurrentPage] = useState(1);
     const recipesPerPage = 9; // 1ページあたりのレシピ数
+
+    // レシピIDをキー、サムネイル画像URLを値とするオブジェクトの状態を用意
+    const [thumbnailImageUrl, setThumbnailImageUrl] = useState<{
+        [key: number]: string;
+    }>({});
 
     useEffect(() => {
         async function fetchData() {
@@ -33,6 +39,40 @@ export default function Recipes() {
 
         fetchData();
     }, [currentPage]);
+
+    // DBに保存しているthumbnailImageKeyを元に、Supabaseから画像のURLを取得する
+    useEffect(() => {
+        async function fetchRecipeImages() {
+            const urlPromises = recipes.map(async (recipe) => {
+                if (recipe.thumbnailImageKey) {
+                    const { data } = supabase.storage
+                        .from("recipe_thumbnail")
+                        .getPublicUrl(recipe.thumbnailImageKey);
+
+                    if (!error && data) {
+                        // 注意: newImageUrls[recipe.id] への代入はここでは行わない
+                        return { id: recipe.id, url: data.publicUrl };
+                    }
+                }
+                return { id: recipe.id, url: null };
+            });
+
+            const urls = await Promise.all(urlPromises);
+            const newImageUrls = urls.reduce(
+                (acc, curr) => {
+                    if (curr.url) acc[curr.id] = curr.url; // nullでないURLのみを状態に追加
+                    return acc;
+                },
+                { ...thumbnailImageUrl }
+            );
+
+            setThumbnailImageUrl(newImageUrls);
+        }
+
+        if (recipes.length > 0) {
+            fetchRecipeImages();
+        }
+    }, [recipes]);
 
     if (loading) {
         return <Loading />;
@@ -80,9 +120,9 @@ export default function Recipes() {
                 {recipes?.map((recipe) => (
                     <div key={recipe.id} className="item">
                         <Link href={`/recipe/${recipe.id}`}>
-                            {recipe.thumbnailUrl && (
+                            {thumbnailImageUrl && (
                                 <Image
-                                    src={recipe.thumbnailUrl}
+                                    src={thumbnailImageUrl[recipe.id]}
                                     alt={recipe.title}
                                     width={300}
                                     height={200}

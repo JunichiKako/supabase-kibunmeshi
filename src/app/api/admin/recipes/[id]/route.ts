@@ -6,7 +6,7 @@ import { getCurrentUser } from "@/utils/supabase";
 // PUTリクエストで受け取るリクエストボディの型を定義
 interface UpdateRecipeRequestBody {
     title: string;
-    thumbnailUrl: string;
+    thumbnailImageKey: string;
     categoryId: number;
     materials: Material[];
     howTos: HowTo[];
@@ -65,7 +65,7 @@ export const PUT = async (
     // リクエストのbodyを取得
     const {
         title,
-        thumbnailUrl,
+        thumbnailImageKey,
         categoryId,
         materials,
         howTos,
@@ -99,7 +99,7 @@ export const PUT = async (
             },
             data: {
                 title,
-                thumbnailUrl,
+                thumbnailImageKey,
                 categoryId,
                 materials: {
                     create: materials.map((material) => ({

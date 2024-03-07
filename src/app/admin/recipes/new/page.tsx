@@ -4,12 +4,12 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import RecipeForm from "../components/RecipeForm";
 import { Material } from "../../../types/recipe";
-import { useSupabaseSession } from '@/app/_hooks/useSupabaseSession'
+import { useSupabaseSession } from "@/app/_hooks/useSupabaseSession";
 
 const CreateRecipeForm: React.FC = () => {
     const [title, setTitle] = useState("");
-    const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(
-        "https://placehold.jp/800x400.png"
+    const [thumbnailImageKey, setThumbnailImageKey] = useState<string | null>(
+        ""
     );
     const [categoryId, setCategoryId] = useState<number>(0);
     const [materials, setMaterials] = useState<Material[]>([
@@ -30,7 +30,7 @@ const CreateRecipeForm: React.FC = () => {
             },
             body: JSON.stringify({
                 title,
-                thumbnailUrl,
+                thumbnailImageKey,
                 categoryId,
                 materials,
                 howTos,
@@ -94,8 +94,8 @@ const CreateRecipeForm: React.FC = () => {
                 mode="new"
                 title={title}
                 setTitle={setTitle}
-                thumbnailUrl={thumbnailUrl}
-                setThumbnailUrl={setThumbnailUrl}
+                thumbnailImageKey={thumbnailImageKey}
+                setThumbnailImageKey={setThumbnailImageKey}
                 categoryId={categoryId}
                 setCategoryId={setCategoryId}
                 materials={materials}

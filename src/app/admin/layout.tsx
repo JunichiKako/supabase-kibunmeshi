@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { useRouteGuard } from "./_hooks/useRouteGuard";
+import MenuBtn from "../_components/MenuBtn/MenuBtn";
 
 export default function AdminLayout({
     children,
@@ -15,5 +16,10 @@ export default function AdminLayout({
         return pathname.includes(href);
     };
 
-    return <>{children}</>;
+    return (
+        <>
+            <MenuBtn />
+            {children}
+        </>
+    );
 }

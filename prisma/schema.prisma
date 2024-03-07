@@ -11,7 +11,7 @@ datasource db {
 model Recipe {
   id            Int       @id @default(autoincrement())
   title         String
-  thumbnailUrl  String?
+  thumbnailImageKey String
   categoryId    Int       
   category      Category  @relation(fields: [categoryId], references: [id])
   createdAt     DateTime  @default(now())

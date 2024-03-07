@@ -6,11 +6,16 @@ import { Recipe } from "../../types/recipe";
 import Loading from "@/app/_components/Loading/Loading";
 import Image from "next/image";
 import styles from "./Recipe_detail.module.css";
+import { supabase } from "../../../utils/supabase";
 
 export default function RecipeDetail() {
     const [recipe, setRecipe] = useState<Recipe | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
+
+    const [thumbnailImageUrl, setThumbnailImageUrl] = useState<null | string>(
+        null
+    );
 
     const { id } = useParams();
 
@@ -21,7 +26,6 @@ export default function RecipeDetail() {
                 const response = await fetch(`/api/recipes/${id}`); // APIのURLを修正
                 const data = await response.json();
                 setRecipe(data.recipe);
-                
             } catch (error) {
                 setError(
                     error instanceof Error
@@ -34,6 +38,22 @@ export default function RecipeDetail() {
 
         fetchRecipe();
     }, [id]);
+
+    // DBに保存しているthumbnailImageKeyを元に、Supabaseから画像のURLを取得する
+    useEffect(() => {
+        if (!recipe?.thumbnailImageKey) return;
+
+        const fetcher = async () => {
+            const {
+                data: { publicUrl },
+            } = await supabase.storage
+                .from("recipe_thumbnail")
+                .getPublicUrl(recipe.thumbnailImageKey);
+
+            setThumbnailImageUrl(publicUrl);
+        };
+        fetcher();
+    }, [recipe?.thumbnailImageKey]);
 
     if (loading) {
         return <Loading />;
@@ -69,10 +89,10 @@ export default function RecipeDetail() {
                 </div>
             </div>
 
-            {recipe.thumbnailUrl && (
-                <div className={styles.thumnail}>
+            {thumbnailImageUrl && (
+                <div className={styles.thumbnail}>
                     <Image
-                        src={recipe.thumbnailUrl}
+                        src={thumbnailImageUrl}
                         alt={recipe.title || "Recipe image"}
                         width={700}
                         height={390}
@@ -81,6 +101,7 @@ export default function RecipeDetail() {
                 </div>
             )}
             <div className={styles.recipe_material}>
+                <p className={styles.material_title}>材料・分量</p>
                 <ul className="material-list">
                     {recipe.materials.map((material, index) => (
                         <li key={index} className={styles.material_item}>
@@ -94,10 +115,13 @@ export default function RecipeDetail() {
             </div>
 
             <div className={styles.recipe_step}>
+                <p className={styles.step_title}>作り方</p>
                 <ol>
                     {recipe.howTos.map((howTo, index) => (
                         <li key={index} className={styles.step_list}>
-                            <div className={styles.step_content_mark}>{index + 1}</div>
+                            <div className={styles.step_content_mark}>
+                                {index + 1}
+                            </div>
                             <div
                                 className="step-content-text"
                                 dangerouslySetInnerHTML={{

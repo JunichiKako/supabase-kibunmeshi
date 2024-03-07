@@ -15,7 +15,7 @@ export const POST = async (request: NextRequest) => {
 
     try {
         const body: Recipe = await request.json();
-        const { title, thumbnailUrl, categoryId, materials, howTos } = body;
+        const { title, thumbnailImageKey, categoryId, materials, howTos } = body;
 
         // categoryId の検証
         const category = await prisma.category.findUnique({
@@ -29,7 +29,7 @@ export const POST = async (request: NextRequest) => {
         const data = await prisma.recipe.create({
             data: {
                 title,
-                thumbnailUrl,
+                thumbnailImageKey,
                 categoryId,
                 materials: {
                     create: materials,

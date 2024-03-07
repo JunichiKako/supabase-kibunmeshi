@@ -32,17 +32,17 @@
     object-fit: cover;
 }
 
-/* .material-title {
-    margin: 60px auto 0 auto;
-    font-size: 24px;
-    border-bottom: 2px solid #f3bb01;
-    max-width: 700px;
-    padding-bottom: 10px;
-} */
-
 .recipe_material {
     max-width: 700px;
     margin: 0 auto;
+}
+
+.material_title {
+    display: inline-block;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-size: 20px;
+    border-bottom: 1px solid #dfdfdf;
 }
 
 .material_item {
@@ -62,11 +62,22 @@
     background-color: #dfdfdf;
 }
 
-
+/* 最後の.material_itemの:before疑似要素にスタイルを適用しない */
+.material_item:last-child::before {
+    content: none;
+}
 
 .recipe_step {
     max-width: 700px;
     margin: 0 auto;
+}
+
+.step_title {
+    display: inline-block;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-size: 20px;
+    border-bottom: 1px solid #dfdfdf;
 }
 
 .step_list {
