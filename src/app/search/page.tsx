@@ -69,9 +69,8 @@ const Search: React.FC = () => {
     }
 
     return (
-        <div>
+        <>
             <SearchRecipe />
-            {/* 検索結果の表示 */}
             <div className="search-results new-content grid">
                 {searchResults.slice(0, 6).map((recipe) => (
                     <div key={recipe.id} className="item">
@@ -88,7 +87,7 @@ const Search: React.FC = () => {
                     </div>
                 ))}
             </div>
-        </div>
+        </>
     );
 };
 

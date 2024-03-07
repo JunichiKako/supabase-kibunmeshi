@@ -19,8 +19,6 @@ const CategoryList = () => {
                 const data = await response.json();
 
                 setCategories(data.categories);
-
-                
             } catch (error) {
                 setCategoriesError(
                     error instanceof Error
@@ -32,7 +30,7 @@ const CategoryList = () => {
         }
 
         fetchData();
-    }, []);
+    }, [categories]);
 
     if (categoriesLoading) {
         return <Loading />;
@@ -88,14 +86,15 @@ const CategoryList = () => {
                                 href={`/category/${category.id}`}
                                 className={styles.category_item}
                             >
-                                <Image
-                                    src={categoryImage}
-                                    alt={category.name}
-                                    width={140}
-                                    height={150}
-                                    priority={true}
-                                    className={styles.category_image}
-                                />
+                                <div className={styles.category_box}>
+                                    <Image
+                                        src={categoryImage}
+                                        alt={category.name}
+                                        width={140}
+                                        height={150}
+                                        className={styles.category_image}
+                                    />
+                                </div>
                             </Link>
                         </div>
                     );

@@ -97,6 +97,7 @@ export default function RecipeDetail() {
                         width={700}
                         height={390}
                         className={styles.thumbnail_img}
+                        priority={true}
                     />
                 </div>
             )}

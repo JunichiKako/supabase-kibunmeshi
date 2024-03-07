@@ -13,13 +13,7 @@ export const GET = async (req: NextRequest) => {
             whereClause = {
                 OR: [
                     {
-                        name: {
-                            contains: searchQuery,
-                            mode: "insensitive",
-                        },
-                    },
-                    {
-                        description: {
+                        title: {
                             contains: searchQuery,
                             mode: "insensitive",
                         },

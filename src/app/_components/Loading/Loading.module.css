@@ -1,7 +1,7 @@
 /* Loading.module.css */
 
 .loadingScreen {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 200px;
     z-index: 9999;

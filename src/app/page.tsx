@@ -46,7 +46,6 @@ export default function Home() {
         fetchData();
     }, []);
 
-    console.log(recipeList);
 
     // DBに保存しているthumbnailImageKeyを元に、Supabaseから画像のURLを取得する
     useEffect(() => {
