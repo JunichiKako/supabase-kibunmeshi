@@ -23,20 +23,37 @@ export default function Home() {
         [key: number]: string;
     }>({});
 
-    // レシピ一覧の取得
     useEffect(() => {
-        setThumbnailImageUrl;
-        async function fetchData() {
+        async function fetchRecipesAndImages() {
+            setLoading(true);
             try {
+                // レシピデータの取得
                 const response = await fetch("/api/recipes");
                 const data = await response.json();
-                if (response.ok) {
-                    setRecipeList(data);
-                } else {
+                if (!response.ok)
                     throw new Error(
                         data.message || "データの取得に失敗しました"
                     );
-                }
+
+                setRecipeList(data);
+
+                // サムネイル画像URLの設定
+                const imageUrls: { [key: number]: string } = {};
+                await Promise.all(
+                    data.map(async (recipe:Recipe) => {
+                        if (recipe.thumbnailImageKey) {
+                            const { data } = await supabase.storage
+                                .from("recipe_thumbnail")
+                                .getPublicUrl(recipe.thumbnailImageKey);
+
+                            if (error) throw error;
+                            if (data.publicUrl)
+                                imageUrls[recipe.id] = data.publicUrl;
+                        }
+                    })
+                );
+
+                setThumbnailImageUrl(imageUrls);
             } catch (error) {
                 setError(error as Error);
             } finally {
@@ -44,35 +61,9 @@ export default function Home() {
             }
         }
 
-        fetchData();
+        fetchRecipesAndImages();
     }, []);
 
-    // DBに保存しているthumbnailImageKeyを元に、Supabaseから画像のURLを取得する
-    useEffect(() => {
-        async function fetchRecipeImages() {
-            const newImageUrls = { ...thumbnailImageUrl }; // 現在の状態をコピー
-
-            await Promise.all(
-                recipeList.map(async (recipe) => {
-                    if (recipe.thumbnailImageKey) {
-                        const { data } = await supabase.storage
-                            .from("recipe_thumbnail")
-                            .getPublicUrl(recipe.thumbnailImageKey);
-
-                        if (data.publicUrl) {
-                            newImageUrls[recipe.id] = data.publicUrl;
-                        }
-                    }
-                })
-            );
-
-            setThumbnailImageUrl(newImageUrls); // 新しいURLマップで状態を更新
-        }
-
-        if (recipeList.length > 0) {
-            fetchRecipeImages();
-        }
-    }, [recipeList, thumbnailImageUrl]);
 
     if (loading) {
         return <Loading />;
