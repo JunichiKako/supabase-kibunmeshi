@@ -93,6 +93,7 @@ const CategoryList = () => {
                                         width={140}
                                         height={150}
                                         className={styles.category_image}
+                                        priority={true}
                                     />
                                 </div>
                             </Link>

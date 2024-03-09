@@ -24,7 +24,8 @@ export default function Home() {
     }>({});
 
     // レシピ一覧の取得
-    useEffect(() => { setThumbnailImageUrl
+    useEffect(() => {
+        setThumbnailImageUrl;
         async function fetchData() {
             try {
                 const response = await fetch("/api/recipes");
@@ -46,7 +47,6 @@ export default function Home() {
         fetchData();
     }, []);
 
-
     // DBに保存しているthumbnailImageKeyを元に、Supabaseから画像のURLを取得する
     useEffect(() => {
         async function fetchRecipeImages() {
@@ -64,9 +64,9 @@ export default function Home() {
                         }
                     }
                 })
-            )
+            );
 
-             setThumbnailImageUrl(newImageUrls); // 新しいURLマップで状態を更新
+            setThumbnailImageUrl(newImageUrls); // 新しいURLマップで状態を更新
         }
 
         if (recipeList.length > 0) {
@@ -83,7 +83,7 @@ export default function Home() {
     }
 
     return (
-        <div>
+        <>
             <SearchRecipe />
             <div className="new-content grid">
                 {recipeList.map((recipe) => (
@@ -95,8 +95,9 @@ export default function Home() {
                                     alt={recipe.title}
                                     width={300}
                                     height={200}
-                                    priority={true}
                                     style={{ objectFit: "cover" }}
+                                    loading="lazy"
+                                    rel="preload"
                                 />
                             ) : (
                                 <div>No image available</div>
@@ -116,6 +117,6 @@ export default function Home() {
             </div>
 
             <CategoryList />
-        </div>
+        </>
     );
 }

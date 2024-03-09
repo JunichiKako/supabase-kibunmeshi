@@ -44,3 +44,9 @@
     background-color: #048ba8;
     margin-right: 20px;
 }
+
+@media screen and (max-width: 768px) {
+    .site_container {
+        padding-top: 40px;
+    }
+}

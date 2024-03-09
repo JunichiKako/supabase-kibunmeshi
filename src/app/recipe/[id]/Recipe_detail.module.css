@@ -63,9 +63,9 @@
 }
 
 /* 最後の.material_itemの:before疑似要素にスタイルを適用しない */
-.material_item:last-child::before {
+/* .material_item:last-child::before {
     content: none;
-}
+} */
 
 .recipe_step {
     max-width: 700px;
@@ -74,7 +74,7 @@
 
 .step_title {
     display: inline-block;
-    margin-top: 10px;
+    margin-top: 30px;
     margin-bottom: 20px;
     font-size: 20px;
     border-bottom: 1px solid #dfdfdf;

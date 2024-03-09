@@ -11,15 +11,6 @@
     検索フォーム
    -------------------------- */
 
-/* .search-results {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    gap: 20px 30px;
-    margin-bottom: 80px;
-    padding: 0 32px;
-} */
-
 .search_form {
     max-width: 100%;
 }
