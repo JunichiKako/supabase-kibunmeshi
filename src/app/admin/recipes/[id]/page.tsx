@@ -8,7 +8,9 @@ import { useSupabaseSession } from "@/app/_hooks/useSupabaseSession";
 
 const CreateRecipeForm: React.FC = () => {
     const [title, setTitle] = useState("");
-    const [thumbnailImageKey, setThumbnailImageKey] = useState<string | null>(null);
+    const [thumbnailImageKey, setThumbnailImageKey] = useState<string | null>(
+        null
+    );
     const [categoryId, setCategoryId] = useState<number>(0);
     const [materials, setMaterials] = useState([{ name: "", quantity: "" }]);
     const [howTos, setHowTos] = useState<{ text: string }[]>([{ text: "" }]);
@@ -32,7 +34,7 @@ const CreateRecipeForm: React.FC = () => {
                 thumbnailImageKey,
                 categoryId,
                 materials,
-                howTos: {},
+                howTos,
             }),
         });
         alert("レシピを更新しました！");
@@ -63,8 +65,7 @@ const CreateRecipeForm: React.FC = () => {
                     Authorization: token,
                 },
             });
-            console.log(res);
-            
+
             const { recipe }: { recipe: Recipe } = await res.json();
             setTitle(recipe.title);
             setThumbnailImageKey(recipe.thumbnailImageKey);

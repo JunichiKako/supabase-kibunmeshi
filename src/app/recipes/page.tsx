@@ -117,7 +117,7 @@ export default function Recipes() {
         <div>
             <div className={styles.recipes_title}>#レシピ一覧</div>
             <div className="new-content grid">
-                {recipes?.map((recipe) => (
+                {recipes.map((recipe) => (
                     <div key={recipe.id} className="item">
                         <Link href={`/recipe/${recipe.id}`}>
                             {thumbnailImageUrl && (
