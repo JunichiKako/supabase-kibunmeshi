@@ -92,7 +92,7 @@
 /* モーダル */
 
 /* モーダルの背景（オーバーレイ） */
-.modal-overlay {
+.modal_overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -106,7 +106,7 @@
 }
 
 /* モーダル本体 */
-.confirm-modal {
+.confirm_modal {
     background-color: #fff;
     padding: 20px;
     border-radius: 5px;
@@ -117,7 +117,7 @@
 }
 
 /* モーダル内のボタン */
-.confirm-modal button {
+.confirm_modal button {
     margin: 10px;
     width: auto; /* ボタンの幅を内容に合わせる */
     padding: 10px 20px; /* ボタンのパディング */
@@ -127,14 +127,18 @@
     border-radius: 5px;
 }
 
+.confirm_modal button:hover {
+    background-color: #37414c;
+}
+
 /* モーダル内のテキスト */
-.confirm-modal p {
+.confirm_modal p {
     margin-top: 10px;
     text-align: left;
 }
 
 /* モーダルのタイトル */
-.confirm-modal h2 {
+.confirm_modal h2 {
     text-align: center;
     margin-bottom: 15px;
 }

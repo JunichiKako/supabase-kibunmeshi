@@ -23,10 +23,7 @@ const Contact = () => {
 
     const handleConfirmSubmit = async () => {
         try {
-            // APIキーのチェックは不要になるため削除します
 
-            // 環境変数の値をチェックする部分を削除し、
-            // Next.jsのAPIルートにリクエストを送信するように変更します。
             const response = await fetch("/api/contact", {
                 method: "POST",
                 headers: {
