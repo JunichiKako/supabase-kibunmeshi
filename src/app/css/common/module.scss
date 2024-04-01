@@ -1,0 +1,22 @@
+@use "./common/config" as *;
+
+//メディアクエリ
+@mixin sp {
+    @media screen and (width < $breakpoint-mobile) {
+        @content;
+    }
+}
+
+@mixin pc {
+    @media screen and ($breakpoint-mobile <= width) {
+        @content;
+    }
+}
+
+@mixin tablet {
+    @media screen and (width < $breakpoint-tablet) {
+        @content;
+    }
+}
+
+

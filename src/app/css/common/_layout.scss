@@ -1,0 +1,25 @@
+@use "./common/module" as *;
+
+.is-pc {
+    display: block;
+
+    @include sp {
+        display: none;
+    }
+}
+
+.is-sp {
+    display: none;
+
+    @include sp {
+        display: block;
+    }
+}
+
+.is-tab {
+    display: none;
+
+    @include tablet {
+        display: block;
+    }
+}
