@@ -1,10 +1,9 @@
 "use client";
 
-import React from "react";
 import { useState, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/utils/supabase";
-import styles from "./Login.module.css";
+import "./login.module.css";
 
 export default function LoginForm() {
     const [email, setEmail] = useState("");
@@ -28,12 +27,12 @@ export default function LoginForm() {
     };
 
     return (
-        <div className={styles.form_container}>
-            <div className={styles.form_header}>ログイン</div>
-            <form className={styles.login_form} onSubmit={handleSubmit}>
+        <div className="form_container">
+            <div className="form_header">ログイン</div>
+            <form className="login_form" onSubmit={handleSubmit}>
                 {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
-                <div className={styles.form_group}>
-                    <label htmlFor="email" className={styles.form_label}>
+                <div className="form_group">
+                    <label htmlFor="email" className="form_label">
                         メールアドレス
                     </label>
                     <input
@@ -41,11 +40,11 @@ export default function LoginForm() {
                         id="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className={styles.form_input}
+                        className="form_input"
                     />
                 </div>
-                <div className={styles.form_group}>
-                    <label htmlFor="password" className={styles.form_label}>
+                <div className="form_group">
+                    <label htmlFor="password" className="form_label">
                         パスワード
                     </label>
                     <input
@@ -53,11 +52,11 @@ export default function LoginForm() {
                         id="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className={styles.form_input}
+                        className="form_input"
                     />
                 </div>
-                <div className={styles.form_group_button}>
-                    <button type="submit" className={styles.form_button}>
+                <div className="form_group_button">
+                    <button type="submit" className="form_button">
                         ログイン
                     </button>
                 </div>
