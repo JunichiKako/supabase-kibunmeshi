@@ -3,7 +3,7 @@
 import { useState, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/utils/supabase";
-import "./login.module.css";
+import "./Login.module.css";
 
 export default function LoginForm() {
     const [email, setEmail] = useState("");
