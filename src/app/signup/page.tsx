@@ -16,7 +16,7 @@ const SingUp = () => {
             email,
             password,
             options: {
-                emailRedirectTo: `http://localhost:3000/login`,
+                emailRedirectTo: `https://supabase-kibunmeshi.vercel.app/login`,
             },
         });
         if (error) {
