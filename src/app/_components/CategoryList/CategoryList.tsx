@@ -5,17 +5,16 @@ import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import Loading from "../Loading/Loading";
 import { Category } from "../../types/recipe";
-import styles from "./CategoryList.module.css";
 
 const CategoryList = () => {
     const [categories, setCategories] = useState<Category[]>([]);
-    const [categoriesLoading, setCategoriesLoading] = useState<boolean>(true);
+    const [categoriesLoading, setCategoriesLoading] = useState(true);
     const [categoriesError, setCategoriesError] = useState<Error | null>(null);
 
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await fetch("/api/categories"); // APIエンドポイントへのパスを指定
+                const response = await fetch("/api/categories");
                 const data = await response.json();
 
                 setCategories(data.categories);
@@ -23,7 +22,7 @@ const CategoryList = () => {
                 setCategoriesError(
                     error instanceof Error
                         ? error
-                        : new Error("An error occurred")
+                        : new Error("カテゴリーの取得に失敗しました。")
                 );
             }
             setCategoriesLoading(false);
@@ -40,64 +39,64 @@ const CategoryList = () => {
         return <div>Error</div>;
     }
 
-    // カテゴリー画像の設定関数を修正
-    const getCategoryStyle = (title: string) => {
+    // 画像のパスを取得する関数
+    const getCategoryImagePath = (title: string) => {
         switch (title) {
             case "あっさり":
-                return {
-                    img: "/images/category/assari.png",
-                    className: styles.assari,
-                };
+                return "/images/category/assari.png";
             case "さっぱり":
-                return {
-                    img: "/images/category/sappari.png",
-                    className: styles.sappari,
-                };
+                return "/images/category/sappari.png";
             case "ガッツリ":
-                return {
-                    img: "/images/category/gatturi.png",
-                    className: styles.gatturi,
-                };
+                return "/images/category/gatturi.png";
             case "ぱぱっと":
-                return {
-                    img: "/images/category/papatto.png",
-                    className: styles.papatto,
-                };
+                return "/images/category/papatto.png";
             default:
-                // デフォルトの画像とスタイルを返す
-                return {
-                    img: "/images/category/default.png",
-                    className: styles.default,
-                };
+                return "/images/category/default.png";
         }
     };
-    return (
-        <div id="category">
-            <div className={styles.category_title}>#Category</div>
-            <div className={styles.category_content}>
-                {categories.map((category) => {
-                    // カテゴリー名に基づいて画像とスタイルを取得
-                    const { img: categoryImage, className: categoryClassName } =
-                        getCategoryStyle(category.name);
 
+    // 背景色を取得する関数
+    const getCategoryBackgroundColor = (title: string) => {
+        switch (title) {
+            case "あっさり":
+                return "#a7d1d1";
+            case "さっぱり":
+                return "#ffb700";
+            case "ガッツリ":
+                return "#e14b00";
+            case "ぱぱっと":
+                return "#201e64";
+            default:
+                return "#cccccc"; // デフォルトの背景色
+        }
+    };
+
+    return (
+        <div className="category-block" id="category">
+            <div className="category-block__title">#Category</div>
+            <div className="category-content">
+                {categories.map((category) => {
+                    // ここで画像のパスと背景色取得
+                    const imagePath = getCategoryImagePath(category.name);
+                    const backgroundColor = getCategoryBackgroundColor(
+                        category.name
+                    );
                     return (
-                        <div className={categoryClassName} key={category.id}>
-                            <Link
-                                href={`/category/${category.id}`}
-                                className={styles.category_item}
+                        <Link href={`/category/${category.id}`}>
+                            <div
+                                key={category.id}
+                                className="category-content__item"
+                                style={{ backgroundColor }}
                             >
-                                <div className={styles.category_box}>
-                                    <Image
-                                        src={categoryImage}
-                                        alt={category.name}
-                                        width={140}
-                                        height={150}
-                                        className={styles.category_image}
-                                        priority={true}
-                                    />
-                                </div>
-                            </Link>
-                        </div>
+                                <Image
+                                    src={imagePath}
+                                    alt={category.name}
+                                    width={160}
+                                    height={40}
+                                    priority={true}
+                                />
+                            </div>
+                        </Link>
                     );
                 })}
             </div>

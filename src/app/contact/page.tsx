@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, FormEvent, ChangeEvent } from "react";
-import styles from "./Contact.module.css";
 
 const Contact = () => {
     const [name, setName] = useState<string>("");
@@ -23,7 +22,6 @@ const Contact = () => {
 
     const handleConfirmSubmit = async () => {
         try {
-
             const response = await fetch("/api/contact", {
                 method: "POST",
                 headers: {
@@ -34,9 +32,9 @@ const Contact = () => {
 
             if (response.ok) {
                 alert("お問い合わせが正常に送信されました。");
-                clearForm(); // フォームの内容をクリア
+                clearForm();
             } else {
-                const errorData = await response.json(); // エラーレスポンスの内容を取得
+                const errorData = await response.json();
                 alert(
                     `送信に失敗しました。${
                         errorData.message || "再度お試しください。"
@@ -44,19 +42,19 @@ const Contact = () => {
                 );
             }
         } catch (error) {
-            console.error(error); // エラー内容をコンソールに出力
+            console.error(error);
             alert("エラーが発生しました。再度お試しください。");
         }
-        setShowConfirmModal(false); // モーダルを閉じる
+        setShowConfirmModal(false);
     };
 
     return (
-        <div>
-            <div className={styles.contact_title}>#Contact</div>
-            <div className={styles.contact_container}>
+        <div className="contact-block">
+            <div className="contact-block__title">#Contact</div>
+            <div className="contact-container">
                 <form onSubmit={handleSubmit}>
-                    <label htmlFor="name" className={styles.label}>
-                        名前<span className={styles.required}>*</span>
+                    <label htmlFor="name" className="label">
+                        名前<span className="required">*</span>
                     </label>
                     <input
                         type="text"
@@ -67,11 +65,11 @@ const Contact = () => {
                         onChange={(e: ChangeEvent<HTMLInputElement>) =>
                             setName(e.target.value)
                         }
-                        className={styles.input}
+                        className="input"
                     />
 
-                    <label htmlFor="email" className={styles.label}>
-                        メールアドレス<span className={styles.required}>*</span>
+                    <label htmlFor="email" className="label">
+                        メールアドレス<span className="required">*</span>
                     </label>
                     <input
                         type="email"
@@ -82,12 +80,12 @@ const Contact = () => {
                         onChange={(e: ChangeEvent<HTMLInputElement>) =>
                             setEmail(e.target.value)
                         }
-                        className={styles.input}
+                        className="input"
                     />
 
-                    <label htmlFor="message" className={styles.label}>
+                    <label htmlFor="message" className="label">
                         お問い合わせ内容
-                        <span className={styles.required}>*</span>
+                        <span className="required">*</span>
                     </label>
                     <textarea
                         id="message"
@@ -98,18 +96,16 @@ const Contact = () => {
                         onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
                             setMessage(e.target.value)
                         }
-                        className={styles.textarea}
+                        className="textarea"
                     />
-                    <button type="submit" className={styles.submit_btn}>
+                    <button type="submit" className="submit-btn">
                         送信
                     </button>
                 </form>
                 {/* モーダル */}
                 {showConfirmModal && (
-                    <div className={styles.modal_overlay}>
-                        {" "}
-                        {/* オーバーレイの追加 */}
-                        <div className={styles.confirm_modal}>
+                    <div className="modal_overlay">
+                        <div className="confirm_modal">
                             <h2>内容確認</h2>
                             <p>名前: {name}</p>
                             <p>メールアドレス: {email}</p>

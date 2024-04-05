@@ -1,0 +1,19 @@
+@use "common/reset";
+@use "common/base";
+
+@use "layout/grid";
+@use "layout/btn";
+
+@use "components/categorylist";
+@use "components/footer";
+@use "components/loading";
+@use "components/sidebar";
+@use "components/menubtn";
+@use "components/searchrecipe";
+
+@use "page/home";
+@use "page/login";
+@use "page/contact";
+@use "page/signup";
+@use "page/category";
+@use "page/recipe_detail";

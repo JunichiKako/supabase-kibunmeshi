@@ -1,9 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
-import MenuBtn from "../MenuBtn/MenuBtn";
-import styles from "./SearchRecipe.module.css";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
+
 
 const SearchRecipe = () => {
     // 検索用の状態変数
@@ -15,21 +14,23 @@ const SearchRecipe = () => {
         await router.push(`/search/?word=${searchTerm}`);
     };
     return (
-        <div className={styles.content_header}>
+        <div className="search-container">
             {/* 検索フォーム */}
-            <div className={styles.search_form}>
+            <div className="search-form">
                 <input
                     type="text"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
+                    onKeyDown={(e) => {
+                        // エンターキーが押された場合に検索を実行
+                        if (e.key === "Enter") {
+                            handleSearch();
+                        }
+                    }}
                     placeholder="レシピを検索"
-                    className={styles.search_input}
+                    className="search-form__input"
                 />
-                <button onClick={handleSearch} className={styles.search_btn}>
-                    検索
-                </button>
             </div>
-            <MenuBtn />
         </div>
     );
 };

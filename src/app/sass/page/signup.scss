@@ -1,0 +1,53 @@
+@use "../common/variables" as *;
+@use "../common/mixin" as *;
+@use "../page/login.scss" as *;
+
+.auth-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 50px auto;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 460px;
+    border-radius: 8px;
+    background: #fff;
+
+    &__header {
+        margin-bottom: 30px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    &__form {
+        width: 100%;
+    }
+}
+
+.auth-group {
+    margin-bottom: 32px;
+    width: 100%;
+
+    &__label {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    &__input {
+        @include form-input;
+    }
+
+    &__action {
+        margin-top: 30px;
+        text-align: center;
+    }
+
+    &__btn {
+        @include form-button;
+        background-color: $main-color;
+
+        &:hover {
+            background-color: $hover-color;
+        }
+    }
+}

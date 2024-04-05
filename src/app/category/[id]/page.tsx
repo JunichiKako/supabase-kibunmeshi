@@ -6,7 +6,6 @@ import { Recipe } from "../../types/recipe";
 import Link from "next/link";
 import Loading from "@/app/_components/Loading/Loading";
 import Image from "next/image";
-import styles from "./Category.module.css";
 import { supabase } from "../../../utils/supabase";
 
 const CategoryList = () => {
@@ -45,31 +44,30 @@ const CategoryList = () => {
 
     useEffect(() => {
         // 各レシピのサムネイルURLを保持するためのオブジェクト
-    
+
         const fetcher = async () => {
             // Promise.allを使用して、すべてのレシピのサムネイルURLを非同期に取得
-            await Promise.all(recipes.map(async (recipe) => {
-                if (recipe.thumbnailImageKey) {
-                    const { data } = await supabase.storage
-                        .from("recipe_thumbnail")
-                        .getPublicUrl(recipe.thumbnailImageKey);
+            await Promise.all(
+                recipes.map(async (recipe) => {
+                    if (recipe.thumbnailImageKey) {
+                        const { data } = await supabase.storage
+                            .from("recipe_thumbnail")
+                            .getPublicUrl(recipe.thumbnailImageKey);
 
-                    // サムネイルURLをオブジェクトに追加
-                    setThumbnailImageUrl((prev) => ({
-                        ...prev,
-                        [recipe.id]: data.publicUrl,
-                    }));
-                }
-            }));
-    
-
+                        // サムネイルURLをオブジェクトに追加
+                        setThumbnailImageUrl((prev) => ({
+                            ...prev,
+                            [recipe.id]: data.publicUrl,
+                        }));
+                    }
+                })
+            );
         };
-    
+
         if (recipes.length > 0) {
             fetcher();
         }
     }, [recipes]);
-    
 
     if (loading) {
         return <Loading />;
@@ -102,29 +100,24 @@ const CategoryList = () => {
 
     return (
         <div>
-            <div>
-                <h2
-                    style={{
-                        backgroundColor: style.backgroundColor,
-                        color: style.color,
-                    }}
-                    className={styles.category_title}
-                >
-                    {categoryName}
-                </h2>
-            </div>
-            <div className="new-content grid">
+            <h2
+                style={{
+                    backgroundColor: style.backgroundColor,
+                    color: style.color,
+                }} className="category-title"
+            >
+                {categoryName}
+            </h2>
+            <div className="grid-block">
                 {recipes?.map((recipe) => (
-                    <div key={recipe.id} className="item">
+                    <div key={recipe.id} className="grid-block__item">
                         <Link href={`/recipe/${recipe.id}`}>
-                            {thumbnailImageUrl && (
+                            {thumbnailImageUrl[recipe.id] && (
                                 <Image
                                     src={thumbnailImageUrl[recipe.id]}
                                     alt={recipe.title}
                                     width={300}
                                     height={200}
-                                    priority={true}
-                                    style={{ objectFit: "cover" }}
                                 />
                             )}
                             <p>{recipe.title}</p>

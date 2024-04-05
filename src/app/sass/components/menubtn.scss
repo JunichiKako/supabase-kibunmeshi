@@ -1,0 +1,59 @@
+@use "../common/variables" as *;
+@use "../common/mixin" as *;
+
+.menubtn-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 24px;
+    margin-bottom: 24px;
+
+    // menuボタンのaタグに対してのスタイル
+    > a {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        color: #fff;
+        padding: 8px 20px;
+        border-radius: 8px;
+        margin-right: 20px;
+
+        :last-child {
+            margin-right: 0;
+        }
+    }
+
+    .login_btn {
+        background-color: #0c7c59;
+    }
+
+    .signup_btn {
+        background-color: #58a4b0;
+    }
+
+    .new_btn {
+        background-color: #e26d5c;
+    }
+
+    .account_btn {
+        background-color: #048ba8;
+    }
+    .logout_btn {
+        background-color: #210203;
+    }
+
+    @include sp {
+        font-size: 14px;
+        white-space: nowrap;
+        padding: 6px 8px;
+
+        > a {
+            width: 100%;
+            height: 100%;
+            flex-direction: column-reverse;
+            gap: 10px;
+            padding: 6px 14px;
+            margin-right: 10px;
+        }
+    }
+}

@@ -1,0 +1,67 @@
+/* グリッドの共通CSS */
+@use "../common/variables" as *;
+@use "../common/mixin" as *;
+
+.grid-block {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 30px 30px;
+    margin-bottom: 80px;
+    padding: 0 32px;
+    overflow: hidden;
+
+    &__item {
+        aspect-ratio: 4 / 3;
+        position: relative;
+
+        a {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        p {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            color: #fff;
+            background-image: linear-gradient(
+                180deg,
+                rgba(255, 255, 255, 0) 60%,
+                rgba(85, 85, 85, 1)
+            );
+            border-radius: 8px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 4px 6px;
+            font-size: 14px;
+        }
+    }
+
+    @include pc {
+        gap: 26px 26px;
+    }
+
+    @include tab {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        gap: 16px 16px;
+        padding: 0 4px;
+
+        p {
+            font-size: 11px;
+        }
+    }
+}

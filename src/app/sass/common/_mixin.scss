@@ -1,0 +1,23 @@
+@use "./variables" as *;
+
+// メディアクエリ
+@mixin sp {
+    // 375px以下
+    @media #{map-get($breakpoint, "sp")} {
+        @content;
+    }
+}
+
+@mixin tab {
+    // 768px以下
+    @media #{map-get($breakpoint, "tab")} {
+        @content;
+    }
+}
+
+@mixin pc {
+    // 950px以下
+    @media #{map-get($breakpoint, "pc")} {
+        @content;
+    }
+}
