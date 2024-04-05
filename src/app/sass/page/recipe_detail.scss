@@ -2,6 +2,7 @@
 @use "../common/mixin" as *;
 
 .recipe-detail {
+    padding: 0 16px;
     &__header {
         max-width: 700px;
         margin: 0 auto;
@@ -13,18 +14,19 @@
         align-items: center;
         gap: 30px;
 
-        @include tab {
+        @include pc {
             flex-direction: column;
             gap: 10px;
+            padding-top: 0;
         }
     }
 
     &__title {
-        font-size: 1.75rem;
+        font-size: 28px;
         font-weight: 500;
 
         @include tab {
-            font-size: 1.5rem;
+            font-size: 18px;
         }
     }
 
@@ -55,7 +57,7 @@
 
         &__title {
             display: inline-block;
-            margin-top: 10px;
+            margin-top: 20px;
             margin-bottom: 20px;
             font-size: 20px;
             border-bottom: 1px solid #dfdfdf;
@@ -89,8 +91,22 @@
     }
 
     .recipe-step {
+        padding-top: 30px;
         max-width: 700px;
         margin: 0 auto;
+
+        &__title {
+            display: inline-block;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            font-size: 20px;
+            border-bottom: 1px solid #dfdfdf;
+
+            @include tab {
+                margin: 30px auto 0 auto;
+                font-size: 20px;
+            }
+        }
 
         &__list {
             display: flex;
@@ -116,6 +132,7 @@
             padding: 8px;
             margin-right: 20px;
             border-radius: 5px;
+            flex-shrink: 0;
         }
     }
 }

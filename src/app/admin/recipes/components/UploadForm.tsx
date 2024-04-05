@@ -1,5 +1,4 @@
-import React from "react";
-import styles from "../new/CreateRecipeForm.module.css";
+
 import { supabase } from "@/utils/supabase";
 import { v4 as uuidv4 } from "uuid";
 import { useState, ChangeEvent, useEffect } from "react";
@@ -22,17 +21,13 @@ const UploadForm: React.FC<UploadFormProps> = ({
         event: ChangeEvent<HTMLInputElement>
     ): Promise<void> => {
         if (!event.target.files || event.target.files.length == 0) {
-            // 画像が選択されていないのでreturn
             return;
         }
 
-        // eventから画像を取得
-        const file = event.target.files[0]; // 選択された画像を取得
+        const file = event.target.files[0];
 
-        // private/は必ずつけること
-        const filePath = `private/${uuidv4()}`; // ファイル名を指定
+        const filePath = `private/${uuidv4()}`; 
 
-        // Supabase Storageに画像をアップロード
         const { data, error } = await supabase.storage
             .from("recipe_thumbnail")
             .upload(filePath, file, {
@@ -40,17 +35,16 @@ const UploadForm: React.FC<UploadFormProps> = ({
                 upsert: false,
             });
 
-        // アップロードに失敗したらエラーを表示
+
         if (error) {
             alert(error.message);
             return;
         }
 
-        // data.pathに画像のパスが格納されているので、thumbnailImageKeyに格納
+        
         setThumbnailImageKey(data.path);
     };
 
-    // DBに保存しているthumbnailImageKeyを元に、Supabaseから画像のURLを取得する
     useEffect(() => {
         if (!thumbnailImageKey) return;
 
@@ -68,24 +62,23 @@ const UploadForm: React.FC<UploadFormProps> = ({
     }, [thumbnailImageKey]);
 
     return (
-        <div className={styles.thumbnailContainer}>
-            <div className={styles.thumbnailInputContainer}>
+        <div className="thumbnail-container">
+            <div className="thumbnail-container__inputBox">
                 <label htmlFor="thumbnailImageKey">サムネイル画像:</label>
                 <input
                     type="file"
                     id="thumbnailImageKey"
                     accept="image/*"
                     onChange={handleImageChange}
-                    className={styles.inputField}
                 />
             </div>
             {thumbnailImageUrl && (
-                <div className={styles.thumbnailPreview}>
+                <div className="thumbnail-preview">
                     <Image
                         src={thumbnailImageUrl}
                         alt="サムネイルプレビュー"
-                        width={288} // 適切なサイズに設定する
-                        height={288} // 適切なサイズに設定する
+                        width={288} 
+                        height={288} 
                         layout="responsive"
                         style={{borderRadius: "10px"}}
                     />

@@ -1,0 +1,29 @@
+@use "../common/variables" as *;
+@use "../common/mixin" as *;
+@use "../layout/grid" as *;
+
+.recipes-all-title {
+    font-size: 1.5rem;
+    margin-bottom: 50px;
+    padding: 0 32px;
+    font-weight: bold;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 80px;
+
+    &__btn {
+        border: none;
+        background-color: #eee;
+        font-size: 0.875rem;
+        padding: 16px 8px;
+        border-radius: 8px;
+        color: #000;
+        margin: 0 12px;
+        :hover {
+            background-color: #ddd;
+        }
+    }
+}

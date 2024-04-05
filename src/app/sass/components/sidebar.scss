@@ -94,10 +94,8 @@
 
         &__main {
             height: 100%;
-            background-color: #ffce50;
 
-            // メニューの開閉
-
+            opacity: 0.8;
             &.hide {
                 transform: translateX(-100%);
                 display: none; // 非表示にする

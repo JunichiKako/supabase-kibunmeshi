@@ -21,7 +21,7 @@ export default function RecipeDetail() {
     useEffect(() => {
         async function fetchRecipe() {
             try {
-                if (!id) return; 
+                if (!id) return;
                 const response = await fetch(`/api/recipes/${id}`); // APIのURLを修正
                 const data = await response.json();
                 setRecipe(data.recipe);
@@ -38,7 +38,6 @@ export default function RecipeDetail() {
         fetchRecipe();
     }, [id]);
 
-   
     useEffect(() => {
         if (!recipe?.thumbnailImageKey) return;
 
@@ -76,6 +75,19 @@ export default function RecipeDetail() {
         ぱぱっと: { backgroundColor: "#201e64", color: "#fff" },
     };
 
+    // エンティティをHTMLに変換する関数
+    function createMarkup(text: string) {
+        const safeText = text
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+        // 改行文字を<br>タグに置換する
+        const withBreaks = safeText.replace(/\n/g, "<br>");
+        return { __html: withBreaks };
+    }
+
     return (
         <div className="recipe-detail">
             <div className="recipe-detail__header">
@@ -104,7 +116,9 @@ export default function RecipeDetail() {
                 <ul className="recipe-material__list">
                     {recipe.materials.map((material, index) => (
                         <li key={index} className="recipe-material__item">
-                            <div className="recipe-material__name">{material.name}</div>
+                            <div className="recipe-material__name">
+                                {material.name}
+                            </div>
                             <div className="recipe-material__quantity">
                                 {material.quantity}
                             </div>
@@ -117,15 +131,13 @@ export default function RecipeDetail() {
                 <p className="recipe-step__title">作り方</p>
                 <ol>
                     {recipe.howTos.map((howTo, index) => (
-                        <li key={index} className="recipe-step_list">
-                            <div className="recipe-step__mark">
-                                {index + 1}
-                            </div>
+                        <li key={index} className="recipe-step__list">
+                            <div className="recipe-step__mark">{index + 1}</div>
                             <div
                                 className="recipe-step__text"
-                                dangerouslySetInnerHTML={{
-                                    __html: howTo.text || "",
-                                }}
+                                dangerouslySetInnerHTML={createMarkup(
+                                    howTo.text || ""
+                                )}
                             />
                         </li>
                     ))}

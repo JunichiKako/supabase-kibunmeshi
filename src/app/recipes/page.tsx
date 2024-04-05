@@ -5,7 +5,6 @@ import React, { useState, useEffect } from "react";
 import Loading from "../_components/Loading/Loading";
 import { Recipe } from "../types/recipe";
 import Image from "next/image";
-import styles from "./Recipes.module.css";
 import { supabase } from "../../utils/supabase";
 
 export default function Recipes() {
@@ -32,7 +31,6 @@ export default function Recipes() {
                 setRecipes(data);
                 setLoading(false);
             } catch (error) {
-                setError(error as Error);
                 setLoading(false);
             }
         }
@@ -72,7 +70,7 @@ export default function Recipes() {
         if (recipes.length > 0) {
             fetchRecipeImages();
         }
-    }, [recipes, error, thumbnailImageUrl]);
+    }, [recipes,thumbnailImageUrl]);
 
     if (loading) {
         return <Loading />;
@@ -91,12 +89,12 @@ export default function Recipes() {
     // ページネーション
     const renderPagiantion = () => {
         return (
-            <div className={styles.pagination}>
+            <div className="pagination">
                 {currentPage > 1 && (
                     <button
                         onClick={() => handlePageChange(currentPage - 1)}
                         disabled={currentPage === 1}
-                        className={styles.pagination_button}
+                        className="pagination__btn"
                     >
                         前のページ
                     </button>
@@ -105,7 +103,7 @@ export default function Recipes() {
                 <button
                     onClick={() => handlePageChange(currentPage + 1)}
                     disabled={!!(recipes && recipes.length < recipesPerPage)}
-                    className={styles.pagination_button}
+                    className="pagination__btn"
                 >
                     次のページ
                 </button>
@@ -115,10 +113,10 @@ export default function Recipes() {
 
     return (
         <div>
-            <div className={styles.recipes_title}>#レシピ一覧</div>
-            <div className="new-content grid">
+            <div className="recipes-all-title">#レシピ一覧</div>
+            <div className="grid-block">
                 {recipes.map((recipe) => (
-                    <div key={recipe.id} className="item">
+                    <div key={recipe.id} className="grid-block__item">
                         <Link href={`/recipe/${recipe.id}`}>
                             {thumbnailImageUrl && (
                                 <Image
@@ -127,7 +125,6 @@ export default function Recipes() {
                                     width={300}
                                     height={200}
                                     priority={true}
-                                    style={{ objectFit: "cover" }}
                                 />
                             )}
                             <p>{recipe.title}</p>

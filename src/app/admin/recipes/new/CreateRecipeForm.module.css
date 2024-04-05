@@ -1,69 +1,13 @@
-/* styles/CreateRecipeForm.module.css */
 
-.form-container {
-    max-width: 700px;
-    margin: auto;
-    padding: 20px;
-    background-color: #fff;
-}
 
-.formContainer {
-    max-width: 700px;
-    margin: auto;
-    padding: 20px;
-}
 
-.formTitle {
-    font-size: 24px;
-    text-align: center;
-    margin-bottom: 40px;
-}
 
-.inputField,
-.textArea {
-    padding: 10px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
 
-/* タイトル */
-
-.titleContainer {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
-}
-
-/* CreateRecipeForm.module.css */
-.thumbnailContainer {
-    display: flex;
-    align-items: flex-start; /* アイテムを上揃えにする */
-    justify-content: space-between;
-    gap: 16px; /* アップロードフィールドとプレビューの間隔 */
-}
-
-.thumbnailPreview {
-    width: 288px; /* プレビュー画像の幅 */
-    height: auto; /* 高さは自動で調整 */
-    border-radius: 4px; /* 角を丸くする */
-    object-fit: cover;
-}
-/* サムネイルアップロードフィールドのコンテナ */
-.thumbnailInputContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 8px; /* ラベルと入力フィールドの間隔 */
-}
-
-/* カテゴリセレクトボックスのコンテナ */
 .categoryContainer {
     margin-top: 20px;
     margin-bottom: 20px;
 }
 
-/* セレクトボックスのスタイル */
 .selectField {
     width: 100%;
     padding: 10px;
@@ -73,30 +17,28 @@
     margin-top: 8px;
 }
 
-/* 材料アイテムのスタイルを更新 */
 .materialItem {
     display: flex;
-    align-items: center; /* 中央揃えにする */
-    gap: 10px; /* 要素の間隔を設定 */
+    align-items: center;
+    gap: 10px;
 }
 
-/* 追加と削除ボタンのスタイルを更新 */
 .addButton,
 .removeButton,
 .submitButton {
-    padding: 10px 15px; /* パディングを調整 */
-    border: none; /* 枠線を削除 */
-    border-radius: 5px; /* 角丸を設定 */
-    color: white; /* テキスト色を白に */
-    font-weight: bold; /* フォントを太く */
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
 }
 
 .addButton {
-    background-color: #007bff; /* 追加ボタンは青色 */
+    background-color: #007bff;
 }
 
 .removeButton {
-    background-color: #dc3545; /* 削除ボタンは赤色 */
+    background-color: #dc3545; 
 }
 
 .materialsContainer {
@@ -104,97 +46,50 @@
     margin-bottom: 90px;
 }
 
-/* 入力フィールドのスタイルを調整 */
+
 .materialNameInput,
 .materialQuantityInput {
-    flex: 1; /* 可能な限りの幅を取るように */
-    margin-right: 10px; /* 右側のマージンを設定 */
+    flex: 1; 
+    margin-right: 10px; 
 }
 
-.submitButton {
-    background-color: #28a745;
-    /* 中央寄せ */
-    display: block;
-    margin: auto;
-    margin-top: 90px;
-}
 
-/* 材料アイテムのスタイルを更新 */
+
+
 .materialItem {
     display: flex;
     align-items: flex-end;
-    margin-bottom: 16px; /* 下部の余白 */
+    margin-bottom: 16px; 
 }
 
-/* ラベルのスタイル */
+
 .label {
     display: block;
     text-align: center;
-    margin-bottom: 10px; /* ラベルの下の余白 */
+    margin-bottom: 10px;
 }
 
-/* ボタンコンテナのスタイルを追加 */
+
 .buttonContainer {
-    display: flex; /* フレックスコンテナにする */
-    justify-content: flex-end; /* ボタンを右端に寄せる */
-    gap: 10px; /* ボタンの間隔 */
-}
+    display: flex; 
+    justify-content: flex-end; 
+    gap: 10px; }
 
 .buttonContainer button {
     margin-top: 10px;
 }
 
-/* 既存のボタンスタイルはそのまま使用 */
+
 .howToItem {
     margin-bottom: 30px;
 }
 .textArea {
     width: 100%;
-    height: 100px; /* お好みで調整してください */
+    height: 100px; 
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
 
-/* 作成/更新ボタン用のスタイル */
 
-.editContainer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px; /* ボタン間のスペース */
-    padding-top: 50px;
-}
-
-.edit_submitButton {
-    background-color: #4caf50; /* 緑色 */
-    color: white;
-    padding: 10px 24px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    margin-right: 10px; /* 削除ボタンとの間隔 */
-    transition: background-color 0.3s;
-}
-
-.edit_submitButton:hover {
-    background-color: #45a049; /* ホバー時には少し暗い緑色 */
-}
-
-/* 削除ボタン用のスタイル */
-.deleteButton {
-    background-color: #f44336; /* 赤色 */
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s;
-}
-
-.deleteButton:hover {
-    background-color: #da190b; /* ホバー時には少し暗い赤色 */
-}

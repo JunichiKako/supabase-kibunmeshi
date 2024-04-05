@@ -29,7 +29,7 @@ export default function Home() {
                                         alt={recipe.title}
                                         width={300}
                                         height={200}
-                                        style={{ objectFit: "cover" }}
+                                        priority={true}
                                     />
                                 ) : (
                                     <div>レシピ画像が設定されていません</div>

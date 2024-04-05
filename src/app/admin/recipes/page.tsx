@@ -5,7 +5,6 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { Recipe } from "../../types/recipe";
 import Link from "next/link";
-import styles from "./adminRecipeList.module.css";
 import { useSupabaseSession } from "@/app/_hooks/useSupabaseSession";
 
 const Page = () => {
@@ -38,17 +37,17 @@ const Page = () => {
         return new Date(dateString).toLocaleDateString(undefined, options);
     };
     return (
-        <div>
-            <h2>管理者用レシピページ</h2>
-            <ul className={styles.list}>
+        <div className="admin-recipelist">
+            <h2 className="admin-recipelist__title">#管理者用レシピページ</h2>
+            <ul className="admin-recipelistlist">
                 {recipes.map((recipe) => (
                     <Link key={recipe.id} href={`/admin/recipes/${recipe.id}`}>
-                        <li className={styles.listItem}>
-                            <h3 className={styles.title}>{recipe.title}</h3>
-                            <p className={styles.category}>
+                        <li className="admin-recipelist__item">
+                            <h3 className="title">{recipe.title}</h3>
+                            <p className="category">
                                 カテゴリ: {recipe.category.name}
                             </p>
-                            <p className={styles.createdAt}>
+                            <p className="createdAt">
                                 作成日: {formatDate(recipe.createdAt)}
                             </p>
                         </li>

@@ -1,9 +1,6 @@
 @use "common/reset";
 @use "common/base";
 
-@use "layout/grid";
-@use "layout/btn";
-
 @use "components/categorylist";
 @use "components/footer";
 @use "components/loading";
@@ -17,3 +14,11 @@
 @use "page/signup";
 @use "page/category";
 @use "page/recipe_detail";
+@use "page/search";
+@use "page/recipe-all";
+
+// admin Page
+@use "page/admin/admin-recipelist";
+// create Page
+@use "page/admin/components/recipeform";
+@use "page/admin/components/uploadform";

@@ -1,6 +1,4 @@
-// MaterialsForm.tsx
-import React from "react";
-import styles from "../new/CreateRecipeForm.module.css";
+
 import { Material } from "../../../types/recipe";
 
 type MaterialsFormProps = {
@@ -24,14 +22,14 @@ const MaterialsForm: React.FC<MaterialsFormProps> = ({
 
 ) => {
     return (
-        <div className={styles.materialsContainer}>
+        <div className="materialsContainer">
             {materials.map((material, index) => (
-                <div key={index} className={styles.materialItem}>
-                    <div className={styles.inputGroup}>
+                <div key={index} className="materialItem">
+                    <div className="inputGroup">
                         {index === 0 && (
                             <label
                                 htmlFor={`materialName-${index}`}
-                                className={styles.label}
+                                className="label"
                             >
                                 材料
                             </label>
@@ -47,15 +45,15 @@ const MaterialsForm: React.FC<MaterialsFormProps> = ({
                                     e.target.value
                                 )
                             }
-                            className={styles.inputField}
+                            className="inputField"
                             placeholder="材料名"
                         />
                     </div>
-                    <div className={styles.inputGroup}>
+                    <div className="inputGroup">
                         {index === 0 && (
                             <label
                                 htmlFor={`materialQuantity-${index}`}
-                                className={styles.label}
+                                className="label"
                             >
                                 分量
                             </label>
@@ -71,7 +69,7 @@ const MaterialsForm: React.FC<MaterialsFormProps> = ({
                                     e.target.value
                                 )
                             }
-                            className={styles.inputField}
+                            className="inputField"
                             placeholder="分量"
                         />
                     </div>
@@ -79,7 +77,6 @@ const MaterialsForm: React.FC<MaterialsFormProps> = ({
                         <button
                             type="button"
                             onClick={() => removeMaterial(index)}
-                            className={`${styles.button} ${styles.removeButton}`}
                         >
                             削除
                         </button>
@@ -88,7 +85,6 @@ const MaterialsForm: React.FC<MaterialsFormProps> = ({
                         <button
                             type="button"
                             onClick={addMaterial}
-                            className={`${styles.button} ${styles.addButton}`}
                         >
                             追加
                         </button>
