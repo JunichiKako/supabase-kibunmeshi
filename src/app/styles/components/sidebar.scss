@@ -113,9 +113,13 @@
 
         &__list {
             a {
-                color: #000;
+                color: #fff;
                 font-size: 24px;
                 padding: 60px 0;
+
+                &:hover {
+                    color: #333;
+                }
             }
         }
     }
