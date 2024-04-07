@@ -94,8 +94,7 @@
 
         &__main {
             height: 100%;
-
-            opacity: 0.8;
+            opacity: 0.95;
             &.hide {
                 transform: translateX(-100%);
                 display: none; // 非表示にする
