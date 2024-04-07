@@ -82,7 +82,10 @@ const CategoryList = () => {
                         category.name
                     );
                     return (
-                        <Link href={`/category/${category.id}`}>
+                        <Link
+                            href={`/category/${category.id}`}
+                            key={category.id}
+                        >
                             <div
                                 key={category.id}
                                 className="category-content__item"
@@ -93,7 +96,7 @@ const CategoryList = () => {
                                     alt={category.name}
                                     width={160}
                                     height={40}
-                                    priority={true}
+                                    style={{ objectFit: "cover" }}
                                 />
                             </div>
                         </Link>
