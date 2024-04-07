@@ -4,7 +4,7 @@ import Sidebar from "./_components/SideBar/Sidebar";
 import Footer from "./_components/Footer/Footer";
 import Favicon from "/public/images/common/favicon.ico";
 // 全体のスタイルを適用
-import "./sass/style.scss";
+import "./styles/style.scss";
 
 
 const inter = Inter({ subsets: ["latin"] });
