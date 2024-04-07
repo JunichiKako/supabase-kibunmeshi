@@ -24,12 +24,12 @@ export default function LoginForm() {
     };
 
     return (
-        <div className="form_container">
-            <div className="form_header">ログイン</div>
-            <form className="login_form" onSubmit={handleSubmit}>
+        <div className="form-block">
+            <div className="form-block__header">ログイン</div>
+            <form className="form-block__form-wrapper" onSubmit={handleSubmit}>
                 {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
-                <div className="form_group">
-                    <label htmlFor="email" className="form_label">
+                <div className="form-group">
+                    <label htmlFor="email" className="form-group__label">
                         メールアドレス
                     </label>
                     <input
@@ -37,11 +37,11 @@ export default function LoginForm() {
                         id="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="form_input"
+                        className="form-group__input"
                     />
                 </div>
                 <div className="form_group">
-                    <label htmlFor="password" className="form_label">
+                    <label htmlFor="password" className="form-group__label">
                         パスワード
                     </label>
                     <input
@@ -49,11 +49,11 @@ export default function LoginForm() {
                         id="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="form_input"
+                        className="form-group__input"
                     />
                 </div>
-                <div className="form_group_button">
-                    <button type="submit" className="form_button">
+                <div className="form-group__btn-wrapper">
+                    <button type="submit" className="form-group__btn">
                         ログイン
                     </button>
                 </div>

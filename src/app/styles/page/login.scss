@@ -1,12 +1,10 @@
 @use "../common/variables" as *;
 @use "../common/mixin" as *;
 
-// _variables.scss
 $main-color: #0c7c59;
 $hover-color: #0056b3;
 $new-color: #58a4b0;
 
-// _mixins.scss
 @mixin form-input {
     width: 100%;
     padding: 10px;
@@ -51,41 +49,41 @@ $new-color: #58a4b0;
         width: 100%;
         margin-top: 40px;
     }
-}
 
-.form-group {
-    margin-bottom: 32px;
-    width: 100%;
-
-    &__label {
-        display: block;
-        margin-bottom: 10px;
-    }
-
-    &__input {
-        @include form-input;
-    }
-
-    &__btn-wrapper {
-        margin-top: 30px;
-        margin-bottom: 10px;
+    .form-group {
+        margin-bottom: 32px;
         width: 100%;
-        text-align: center;
-    }
 
-    &__btn {
-        @include form-button;
-        background-color: $main-color;
-
-        &:hover {
-            background-color: $hover-color;
+        &__label {
+            display: block;
+            margin-bottom: 10px;
         }
 
-        &.new {
-            background-color: $new-color;
+        &__input {
+            @include form-input;
         }
-    }
-    @include tab {
-        width: 100%;
+
+        &__btn-wrapper {
+            margin-top: 30px;
+            margin-bottom: 10px;
+            width: 100%;
+            text-align: center;
+        }
+
+        &__btn {
+            @include form-button;
+            background-color: $main-color;
+
+            &:hover {
+                background-color: $hover-color;
+            }
+
+            &.new {
+                background-color: $new-color;
+            }
+        }
+        @include tab {
+            width: 100%;
+        }
     }
 }

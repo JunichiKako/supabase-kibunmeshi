@@ -16,7 +16,6 @@ export default function AuthForm() {
         const { error } = await supabase.auth.signInWithPassword({
             email,
             password,
-            
         });
         if (error) {
             setErrorMessage("ログインに失敗しました");
@@ -27,7 +26,7 @@ export default function AuthForm() {
 
     return (
         <div className="auth-block">
-            <div className="auth-block__header">ログイン</div>
+            <div className="auth-block__header">新規登録</div>
             <form className="auth-block__form" onSubmit={handleSubmit}>
                 <div className="auth-group">
                     <label htmlFor="email" className="auth-group__label">
@@ -55,7 +54,7 @@ export default function AuthForm() {
                 </div>
                 <div className="auth-group__action">
                     <button type="submit" className="auth-group__btn">
-                        ログイン
+                        新規登録
                     </button>
                 </div>
             </form>
