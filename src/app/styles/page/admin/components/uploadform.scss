@@ -1,0 +1,33 @@
+@use "../../../common/variables" as *;
+@use "../../../common/mixin" as *;
+@use "../../../layout/admin-form" as *;
+
+//　アップロードフォーム
+.thumbnail-container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+
+    &__inputBox {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .thumbnail-preview {
+        width: 288px;
+        height: auto;
+        border-radius: 4px;
+        object-fit: cover;
+    }
+
+    @include sp {
+        flex-direction: column;
+        gap: 16px;
+
+        .thumbnail-preview{
+            width: 100%;
+        }
+    }
+}

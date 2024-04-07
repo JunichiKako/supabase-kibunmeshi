@@ -1,0 +1,47 @@
+@use "../../../common/variables" as *;
+@use "../../../common/mixin" as *;
+@use "../../../layout/admin-form" as *;
+
+// レシピフォーム
+.recipe-postform {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+
+    &__title {
+        font-size: 24px;
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .title-container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+
+        .input-field {
+            @include input-style;
+        }
+    }
+    .edit-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding-top: 50px;
+
+        &__submitbtn {
+            @include button-style(#4caf50, #45a049);
+        }
+
+        &__deletebtn {
+            @include button-style(#f44336, #da190b);
+        }
+    }
+
+    @include sp {
+        padding: 4px;
+    }
+}

@@ -1,69 +1,64 @@
 "use client";
 
-import React from "react";
-import styles from "./Singup.module.css";
+import { useState, FormEvent } from "react";
+import { useRouter } from "next/navigation";
 import { supabase } from "@/utils/supabase";
-import { useState } from "react";
 
-const SingUp = () => {
+export default function AuthForm() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
+    const router = useRouter();
 
-    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-
-        const { error } = await supabase.auth.signUp({
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        // ここをログインまたはサインアップに応じて適切なSupabaseの関数に変更
+        const { error } = await supabase.auth.signInWithPassword({
             email,
             password,
-            options: {
-                emailRedirectTo: `https://supabase-kibunmeshi.vercel.app/login`,
-            },
+            
         });
         if (error) {
-            alert("登録に失敗しました");
+            setErrorMessage("ログインに失敗しました");
         } else {
-            setEmail("");
-            setPassword("");
-            alert("確認メールを送信しました。");
+            router.replace("/admin/recipes");
         }
     };
 
     return (
-        <div className={styles.form_container}>
-            <div className={styles.form_header}>#新規登録</div>
-            <form onSubmit={handleSubmit} className={styles.login_form}>
-                <div className={styles.form_group}>
-                    <label htmlFor="email" className={styles.form_label}>
+        <div className="auth-block">
+            <div className="auth-block__header">ログイン</div>
+            <form className="auth-block__form" onSubmit={handleSubmit}>
+                <div className="auth-group">
+                    <label htmlFor="email" className="auth-group__label">
                         メールアドレス
                     </label>
                     <input
-                        id="email"
                         type="email"
-                        className={styles.form_input}
+                        id="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
+                        className="auth-group__input"
                     />
                 </div>
-                <div className={styles.form_group}>
-                    <label htmlFor="password" className={styles.form_label}>
+                <div className="auth-group">
+                    <label htmlFor="password" className="auth-group__label">
                         パスワード
                     </label>
                     <input
-                        id="password"
                         type="password"
-                        className={styles.form_input}
+                        id="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                        className="auth-group__input"
                     />
                 </div>
-                <div className={styles.form_group_button}>
-                    <button type="submit" className={styles.new_button}>
-                        新規登録
+                <div className="auth-group__action">
+                    <button type="submit" className="auth-group__btn">
+                        ログイン
                     </button>
                 </div>
             </form>
         </div>
     );
-};
-
-export default SingUp;
+}

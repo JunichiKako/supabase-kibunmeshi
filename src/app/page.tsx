@@ -6,7 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import CategoryList from "./_components/CategoryList/CategoryList";
 import SearchRecipe from "./_components/SearchRecipe/SearchRecipe";
-import styles from "./Home.module.css";
+import MenuBtn from "./_components/MenuBtn/MenuBtn";
 
 export default function Home() {
     const { recipes, thumbnailUrls, isLoading, error } = useRecipes();
@@ -16,11 +16,12 @@ export default function Home() {
 
     return (
         <>
+            <MenuBtn />
             <SearchRecipe />
-            <div className="new-content grid">
+            <div className="grid-block">
                 {recipes &&
                     recipes.map((recipe) => (
-                        <div key={recipe.id} className="item">
+                        <div key={recipe.id} className="grid-block__item">
                             <Link href={`/recipe/${recipe.id}`}>
                                 {thumbnailUrls[recipe.id] ? (
                                     <Image
@@ -28,7 +29,7 @@ export default function Home() {
                                         alt={recipe.title}
                                         width={300}
                                         height={200}
-                                        style={{ objectFit: "cover" }}
+                                        priority={true}
                                     />
                                 ) : (
                                     <div>レシピ画像が設定されていません</div>
@@ -39,9 +40,9 @@ export default function Home() {
                     ))}
             </div>
 
-            <div className={styles.recipe_all}>
+            <div className="recipe_all">
                 <Link href="/recipes">
-                    <div className={styles.recipe_all_btn}>
+                    <div className="recipe_all__btn">
                         レシピ一覧はこちらから
                     </div>
                 </Link>

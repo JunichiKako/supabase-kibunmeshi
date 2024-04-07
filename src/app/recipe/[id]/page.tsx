@@ -5,7 +5,6 @@ import { useParams } from "next/navigation";
 import { Recipe } from "../../types/recipe";
 import Loading from "@/app/_components/Loading/Loading";
 import Image from "next/image";
-import styles from "./Recipe_detail.module.css";
 import { supabase } from "../../../utils/supabase";
 
 export default function RecipeDetail() {
@@ -22,7 +21,7 @@ export default function RecipeDetail() {
     useEffect(() => {
         async function fetchRecipe() {
             try {
-                if (!id) return; // idがない場合は早期リターン
+                if (!id) return;
                 const response = await fetch(`/api/recipes/${id}`); // APIのURLを修正
                 const data = await response.json();
                 setRecipe(data.recipe);
@@ -39,7 +38,6 @@ export default function RecipeDetail() {
         fetchRecipe();
     }, [id]);
 
-    // DBに保存しているthumbnailImageKeyを元に、Supabaseから画像のURLを取得する
     useEffect(() => {
         if (!recipe?.thumbnailImageKey) return;
 
@@ -77,12 +75,25 @@ export default function RecipeDetail() {
         ぱぱっと: { backgroundColor: "#201e64", color: "#fff" },
     };
 
+    // エンティティをHTMLに変換する関数
+    function createMarkup(text: string) {
+        const safeText = text
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+        // 改行文字を<br>タグに置換する
+        const withBreaks = safeText.replace(/\n/g, "<br>");
+        return { __html: withBreaks };
+    }
+
     return (
-        <div>
-            <div className={styles.recipe_header}>
-                <h2 className={styles.recipe_title}>{recipe.title}</h2>
+        <div className="recipe-detail">
+            <div className="recipe-detail__header">
+                <h2 className="recipe-detail__title">{recipe.title}</h2>
                 <div
-                    className={styles.category_title}
+                    className="category__title"
                     style={categoryStyles[recipe.category.name] || {}}
                 >
                     {recipe.category.name}
@@ -90,24 +101,25 @@ export default function RecipeDetail() {
             </div>
 
             {thumbnailImageUrl && (
-                <div className={styles.thumbnail}>
+                <div className="recipe-detail__thumbnail">
                     <Image
                         src={thumbnailImageUrl}
                         alt={recipe.title || "Recipe image"}
                         width={700}
                         height={390}
-                        className={styles.thumbnail_img}
                         priority={true}
                     />
                 </div>
             )}
-            <div className={styles.recipe_material}>
-                <p className={styles.material_title}>材料・分量</p>
-                <ul className="material-list">
+            <div className="recipe-material">
+                <p className="recipe-material__title">材料・分量</p>
+                <ul className="recipe-material__list">
                     {recipe.materials.map((material, index) => (
-                        <li key={index} className={styles.material_item}>
-                            <div className="material-name">{material.name}</div>
-                            <div className="material-quantity">
+                        <li key={index} className="recipe-material__item">
+                            <div className="recipe-material__name">
+                                {material.name}
+                            </div>
+                            <div className="recipe-material__quantity">
                                 {material.quantity}
                             </div>
                         </li>
@@ -115,19 +127,17 @@ export default function RecipeDetail() {
                 </ul>
             </div>
 
-            <div className={styles.recipe_step}>
-                <p className={styles.step_title}>作り方</p>
+            <div className="recipe-step">
+                <p className="recipe-step__title">作り方</p>
                 <ol>
                     {recipe.howTos.map((howTo, index) => (
-                        <li key={index} className={styles.step_list}>
-                            <div className={styles.step_content_mark}>
-                                {index + 1}
-                            </div>
+                        <li key={index} className="recipe-step__list">
+                            <div className="recipe-step__mark">{index + 1}</div>
                             <div
-                                className="step-content-text"
-                                dangerouslySetInnerHTML={{
-                                    __html: howTo.text || "",
-                                }}
+                                className="recipe-step__text"
+                                dangerouslySetInnerHTML={createMarkup(
+                                    howTo.text || ""
+                                )}
                             />
                         </li>
                     ))}

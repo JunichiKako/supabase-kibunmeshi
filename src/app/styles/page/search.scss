@@ -1,0 +1,22 @@
+@use "../common/variables" as *;
+@use "../common/mixin" as *;
+@use "../layout/grid" as *;
+
+.search-block {
+    .search__title {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 20px;
+        padding: 0 24px;
+        @include tab {
+            padding: 0 16px;
+        }
+    }
+    .search__result {
+        margin-bottom: 20px;
+        padding: 0 24px;
+
+        @include tab {
+        }
+    }
+}

@@ -14,7 +14,7 @@ const Search: React.FC = () => {
     const word = searchParams.get("word");
     const [searchResults, setSearchResults] = useState<Recipe[]>([]);
     const [loading, setLoading] = useState(false);
-    // レシピIDをキー、サムネイル画像URLを値とするオブジェクトの状態を用意
+
     const [thumbnailImageUrl, setThumbnailImageUrl] = useState<{
         [key: number]: string;
     }>({});
@@ -65,15 +65,20 @@ const Search: React.FC = () => {
     }, [searchResults]);
 
     if (loading) {
-        return <Loading />; // ローディングコンポーネントを表示
+        return <Loading />;
     }
 
     return (
-        <>
+        <div className="search-block">
             <SearchRecipe />
-            <div className="search-results new-content grid">
+            <h2 className="search__title">#検索結果</h2>
+            <p className="search__result">
+                {word ? `「${word}」` : "検索ワード"}の検索結果は
+                {searchResults.length}件です
+            </p>
+            <div className="grid-block">
                 {searchResults.slice(0, 6).map((recipe) => (
-                    <div key={recipe.id} className="item">
+                    <div key={recipe.id} className="grid-block__item">
                         <Link href={`/recipe/${recipe.id}`}>
                             {thumbnailImageUrl && (
                                 <Image
@@ -87,7 +92,7 @@ const Search: React.FC = () => {
                     </div>
                 ))}
             </div>
-        </>
+        </div>
     );
 };
 

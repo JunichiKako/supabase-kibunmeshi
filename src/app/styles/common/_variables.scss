@@ -1,0 +1,21 @@
+// 共通の設定ファイル
+
+// color
+$main_color: #f3bb01;
+
+// font-family
+
+// z-index
+
+// device
+$device_pc: 1024;
+$device_tab: 768;
+$device_sp: 550;
+
+// media query
+$breakpoint: (
+    
+    "sp": "screen and (max-width: 550px)",
+    "tab": "screen and (max-width: 768px)",
+    "pc": "screen and (max-width: 950px)",
+);

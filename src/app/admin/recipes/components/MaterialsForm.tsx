@@ -1,6 +1,3 @@
-// MaterialsForm.tsx
-import React from "react";
-import styles from "../new/CreateRecipeForm.module.css";
 import { Material } from "../../../types/recipe";
 
 type MaterialsFormProps = {
@@ -14,28 +11,18 @@ type MaterialsFormProps = {
     removeMaterial: (index: number) => void;
 };
 
-
 const MaterialsForm: React.FC<MaterialsFormProps> = ({
     materials,
     handleMaterialChange,
     addMaterial,
     removeMaterial,
-}
-
-) => {
+}) => {
     return (
-        <div className={styles.materialsContainer}>
+        <div className="materials-container">
+            <h2 className="materials-container__title">材料：</h2>
             {materials.map((material, index) => (
-                <div key={index} className={styles.materialItem}>
-                    <div className={styles.inputGroup}>
-                        {index === 0 && (
-                            <label
-                                htmlFor={`materialName-${index}`}
-                                className={styles.label}
-                            >
-                                材料
-                            </label>
-                        )}
+                <div key={index} className="material-item">
+                    <div className="material-group">
                         <input
                             id={`materialName-${index}`}
                             type="text"
@@ -47,19 +34,11 @@ const MaterialsForm: React.FC<MaterialsFormProps> = ({
                                     e.target.value
                                 )
                             }
-                            className={styles.inputField}
+                            className="input-field"
                             placeholder="材料名"
                         />
                     </div>
-                    <div className={styles.inputGroup}>
-                        {index === 0 && (
-                            <label
-                                htmlFor={`materialQuantity-${index}`}
-                                className={styles.label}
-                            >
-                                分量
-                            </label>
-                        )}
+                    <div className="quantity-group">
                         <input
                             id={`materialQuantity-${index}`}
                             type="text"
@@ -71,28 +50,30 @@ const MaterialsForm: React.FC<MaterialsFormProps> = ({
                                     e.target.value
                                 )
                             }
-                            className={styles.inputField}
+                            className="input-field"
                             placeholder="分量"
                         />
                     </div>
-                    {materials.length > 1 && (
-                        <button
-                            type="button"
-                            onClick={() => removeMaterial(index)}
-                            className={`${styles.button} ${styles.removeButton}`}
-                        >
-                            削除
-                        </button>
-                    )}
-                    {index === materials.length - 1 && (
-                        <button
-                            type="button"
-                            onClick={addMaterial}
-                            className={`${styles.button} ${styles.addButton}`}
-                        >
-                            追加
-                        </button>
-                    )}
+                    <div className="button-group">
+                        {materials.length > 1 && (
+                            <button
+                                type="button"
+                                onClick={() => removeMaterial(index)}
+                                className="remove-button"
+                            >
+                                削除
+                            </button>
+                        )}
+                        {index === materials.length - 1 && (
+                            <button
+                                type="button"
+                                onClick={addMaterial}
+                                className="add-button"
+                            >
+                                追加
+                            </button>
+                        )}
+                    </div>
                 </div>
             ))}
         </div>

@@ -1,0 +1,11 @@
+@use "../common/variables" as *;
+@use "../common/mixin" as *;
+@use "../layout/grid" as *;
+
+.category-title {
+    display: inline-block;
+    font-size: 1.2rem;
+    padding: 6px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}

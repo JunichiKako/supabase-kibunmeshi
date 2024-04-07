@@ -1,17 +1,11 @@
-// RecipeForm.tsx
 "use client";
 
-import React from "react";
-import styles from "../new/CreateRecipeForm.module.css";
 import { Material } from "../../../types/recipe";
 import UploadForm from "./UploadForm";
 import SelectCategory from "./SelectCategory";
 import MaterialsForm from "./MaterialsForm";
 import ProcessForm from "./ProcessForm";
 
-
-
-// PostFormに必要なpropsの型定義
 type PostFormProps = {
     mode: "new" | "edit";
     title: string;
@@ -35,7 +29,7 @@ type PostFormProps = {
     addHowTo: () => void;
     removeHowTo: (index: number) => void;
     handleHowToChange: (index: number, newText: string) => void;
-    onDelete?: () => Promise<void> | void; // onDelete プロパティを追加
+    onDelete?: () => Promise<void> | void;
 };
 
 const PostForm: React.FC<PostFormProps> = ({
@@ -58,58 +52,60 @@ const PostForm: React.FC<PostFormProps> = ({
     removeHowTo,
     handleHowToChange,
     onDelete,
-}) => 
-    {
-        return (
-            <form onSubmit={handleSubmit} className={styles.formContainer}>
-                <h2 className={styles.formTitle}>レシピ投稿</h2>
-        
-                <div className={styles.titleContainer}>
-                    <label>タイトル :</label>
-                    <input
-                        type="text"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                        className={styles.inputField}
-                    />
-                </div>
-        
-                <UploadForm
-                    thumbnailImageKey={thumbnailImageKey}
-                    setThumbnailImageKey={setThumbnailImageKey}
+}) => {
+    return (
+        <form onSubmit={handleSubmit} className="recipe-postform">
+            <h2 className="recipe-postform__title">レシピ投稿</h2>
+
+            <div className="title-container">
+                <label>タイトル :</label>
+                <input
+                    type="text"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    className="input-field"
                 />
-        
-                <SelectCategory categoryId={categoryId} setCategoryId={setCategoryId} />
-        
-                <MaterialsForm
-                    materials={materials}
-                    handleMaterialChange={handleMaterialChange}
-                    addMaterial={addMaterial}
-                    removeMaterial={removeMaterial}
-                />
-        
-                <ProcessForm
-                    howTos={howTos}
-                    addHowTo={addHowTo}
-                    removeHowTo={removeHowTo}
-                    handleHowToChange={handleHowToChange}
-                />
-                <div className={styles.editContainer}>
-                    <button type="submit" className={styles.edit_submitButton}>
-                        {mode === "new" ? "レシピ作成" : "レシピ更新"}
+            </div>
+
+            <UploadForm
+                thumbnailImageKey={thumbnailImageKey}
+                setThumbnailImageKey={setThumbnailImageKey}
+            />
+
+            <SelectCategory
+                categoryId={categoryId}
+                setCategoryId={setCategoryId}
+            />
+
+            <MaterialsForm
+                materials={materials}
+                handleMaterialChange={handleMaterialChange}
+                addMaterial={addMaterial}
+                removeMaterial={removeMaterial}
+            />
+
+            <ProcessForm
+                howTos={howTos}
+                addHowTo={addHowTo}
+                removeHowTo={removeHowTo}
+                handleHowToChange={handleHowToChange}
+            />
+            <div className="edit-container">
+                <button type="submit" className="edit-container__submitbtn">
+                    {mode === "new" ? "レシピ作成" : "レシピ更新"}
+                </button>
+                {mode === "edit" && (
+                    <button
+                        type="button"
+                        className="edit-container__deletebtn"
+                        onClick={onDelete}
+                    >
+                        レシピ削除
                     </button>
-                    {mode === "edit" && (
-                        <button
-                            type="button"
-                            className={styles.deleteButton}
-                            onClick={onDelete}
-                        >
-                            レシピ削除
-                        </button>
-                    )}
-                </div>
-            </form>
-        );
-}
+                )}
+            </div>
+        </form>
+    );
+};
 
 export default PostForm;

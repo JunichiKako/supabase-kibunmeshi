@@ -5,8 +5,9 @@ import { supabase } from "../../utils/supabase";
 
 async function fetcher(url: string) {
     const response = await fetch(url);
+
     if (!response.ok) {
-        throw new Error("An error occurred while fetching the data.");
+        throw new Error("読み込みエラーが発生しました。ページをリロードしてください。");
     }
     return response.json();
 }

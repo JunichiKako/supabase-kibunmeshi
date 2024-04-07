@@ -1,0 +1,27 @@
+@use "common/reset";
+@use "common/base";
+
+@use "components/categorylist";
+@use "components/footer";
+@use "components/loading";
+@use "components/sidebar";
+@use "components/menubtn";
+@use "components/searchrecipe";
+
+@use "page/home";
+@use "page/login";
+@use "page/contact";
+@use "page/signup";
+@use "page/category";
+@use "page/recipe_detail";
+@use "page/search";
+@use "page/recipe-all";
+
+// admin Page
+@use "page/admin/admin-recipelist";
+// create Page
+@use "page/admin/components/recipeform.scss";
+@use "page/admin/components/uploadform.scss";
+@use "page/admin/components/selectcategory.scss";
+@use "page/admin/components/matesialsform.scss";
+@use "page/admin/components/processform.scss";
