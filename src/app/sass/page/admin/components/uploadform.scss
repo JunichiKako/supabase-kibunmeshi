@@ -1,6 +1,8 @@
 @use "../../../common/variables" as *;
 @use "../../../common/mixin" as *;
+@use "../../../layout/admin-form" as *;
 
+//　アップロードフォーム
 .thumbnail-container {
     display: flex;
     align-items: flex-start;
@@ -18,5 +20,14 @@
         height: auto;
         border-radius: 4px;
         object-fit: cover;
+    }
+
+    @include sp {
+        flex-direction: column;
+        gap: 16px;
+
+        .thumbnail-preview{
+            width: 100%;
+        }
     }
 }

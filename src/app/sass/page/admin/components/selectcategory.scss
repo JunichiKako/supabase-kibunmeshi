@@ -1,0 +1,18 @@
+@use "../../../common/variables" as *;
+@use "../../../common/mixin" as *;
+@use "../../../layout/admin-form.scss" as *;
+
+// カテゴリー選択フォーム
+.category-container {
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+    .select-field {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: white;
+        margin-top: 8px;
+    }
+}

@@ -1,5 +1,8 @@
-// 
+@use "../../../common/variables" as *;
+@use "../../../common/mixin" as *;
+@use "../../../layout/admin-form" as *;
 
+// レシピフォーム
 .recipe-postform {
     max-width: 700px;
     margin: 0 auto;
@@ -18,12 +21,8 @@
         flex-direction: column;
         margin-bottom: 20px;
 
-        .inputField,
-        .textArea {
-            padding: 10px;
-            background-color: #fff;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+        .input-field {
+            @include input-style;
         }
     }
     .edit-container {
@@ -34,34 +33,15 @@
         padding-top: 50px;
 
         &__submitbtn {
-            background-color: #4caf50;
-            color: white;
-            padding: 10px 24px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            margin-right: 10px;
-            transition: background-color 0.3s;
-
-            &:hover {
-                background-color: #45a049;
-            }
+            @include button-style(#4caf50, #45a049);
         }
 
         &__deletebtn {
-            background-color: #f44336;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s;
-
-            &:hover {
-                background-color: #da190b;
-            }
+            @include button-style(#f44336, #da190b);
         }
+    }
+
+    @include sp {
+        padding: 4px;
     }
 }

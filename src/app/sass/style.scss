@@ -20,5 +20,8 @@
 // admin Page
 @use "page/admin/admin-recipelist";
 // create Page
-@use "page/admin/components/recipeform";
-@use "page/admin/components/uploadform";
+@use "page/admin/components/recipeform.scss";
+@use "page/admin/components/uploadform.scss";
+@use "page/admin/components/selectcategory.scss";
+@use "page/admin/components/matesialsform.scss";
+@use "page/admin/components/processform.scss";

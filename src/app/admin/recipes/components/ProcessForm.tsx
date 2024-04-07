@@ -17,10 +17,10 @@ const ProcessForm: React.FC<ProcessFormProps> = ({
     handleHowToChange,
 }) => {
     return (
-        <>
+        <div className="howto-container">
             {howTos.map((howTo, index) => (
-                <div key={index} className="howToItem">
-                    <label className="stepLabel">{`手順 ${
+                <div key={index} className="howto-item">
+                    <label>{`手順 ${
                         index + 1
                     }`}</label>
                     <textarea
@@ -28,13 +28,14 @@ const ProcessForm: React.FC<ProcessFormProps> = ({
                         onChange={(e) =>
                             handleHowToChange(index, e.target.value)
                         }
-                        className="textArea"
+                        className="textarea"
                         placeholder="手順をここに入力"
                     />
-                    <div className="buttonContainer">
+                    <div className="button-container">
                             <button
                                 type="button"
                                 onClick={() => removeHowTo(index)}
+                                className="remove-button"
                             >
                                 削除
                             </button>
@@ -42,6 +43,7 @@ const ProcessForm: React.FC<ProcessFormProps> = ({
                             <button
                                 type="button"
                                 onClick={addHowTo}
+                                className="add-button"
                             >
                                 手順を追加
                             </button>
@@ -49,7 +51,7 @@ const ProcessForm: React.FC<ProcessFormProps> = ({
                     </div>
                 </div>
             ))}
-        </>
+        </div>
     );
 };
 

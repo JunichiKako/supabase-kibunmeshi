@@ -63,7 +63,7 @@ const PostForm: React.FC<PostFormProps> = ({
                     type="text"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
-                    className="inputField"
+                    className="input-field"
                 />
             </div>
 

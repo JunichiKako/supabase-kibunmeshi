@@ -1,4 +1,3 @@
-
 import { Material } from "../../../types/recipe";
 
 type MaterialsFormProps = {
@@ -12,28 +11,18 @@ type MaterialsFormProps = {
     removeMaterial: (index: number) => void;
 };
 
-
 const MaterialsForm: React.FC<MaterialsFormProps> = ({
     materials,
     handleMaterialChange,
     addMaterial,
     removeMaterial,
-}
-
-) => {
+}) => {
     return (
-        <div className="materialsContainer">
+        <div className="materials-container">
+            <h2 className="materials-container__title">材料：</h2>
             {materials.map((material, index) => (
-                <div key={index} className="materialItem">
-                    <div className="inputGroup">
-                        {index === 0 && (
-                            <label
-                                htmlFor={`materialName-${index}`}
-                                className="label"
-                            >
-                                材料
-                            </label>
-                        )}
+                <div key={index} className="material-item">
+                    <div className="material-group">
                         <input
                             id={`materialName-${index}`}
                             type="text"
@@ -45,19 +34,11 @@ const MaterialsForm: React.FC<MaterialsFormProps> = ({
                                     e.target.value
                                 )
                             }
-                            className="inputField"
+                            className="input-field"
                             placeholder="材料名"
                         />
                     </div>
-                    <div className="inputGroup">
-                        {index === 0 && (
-                            <label
-                                htmlFor={`materialQuantity-${index}`}
-                                className="label"
-                            >
-                                分量
-                            </label>
-                        )}
+                    <div className="quantity-group">
                         <input
                             id={`materialQuantity-${index}`}
                             type="text"
@@ -69,26 +50,30 @@ const MaterialsForm: React.FC<MaterialsFormProps> = ({
                                     e.target.value
                                 )
                             }
-                            className="inputField"
+                            className="input-field"
                             placeholder="分量"
                         />
                     </div>
-                    {materials.length > 1 && (
-                        <button
-                            type="button"
-                            onClick={() => removeMaterial(index)}
-                        >
-                            削除
-                        </button>
-                    )}
-                    {index === materials.length - 1 && (
-                        <button
-                            type="button"
-                            onClick={addMaterial}
-                        >
-                            追加
-                        </button>
-                    )}
+                    <div className="button-group">
+                        {materials.length > 1 && (
+                            <button
+                                type="button"
+                                onClick={() => removeMaterial(index)}
+                                className="remove-button"
+                            >
+                                削除
+                            </button>
+                        )}
+                        {index === materials.length - 1 && (
+                            <button
+                                type="button"
+                                onClick={addMaterial}
+                                className="add-button"
+                            >
+                                追加
+                            </button>
+                        )}
+                    </div>
                 </div>
             ))}
         </div>

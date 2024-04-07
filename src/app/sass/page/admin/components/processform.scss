@@ -1,0 +1,34 @@
+@use "../../../common/variables" as *;
+@use "../../../common/mixin" as *;
+@use "../../../layout/admin-form" as *;
+
+.howto-container {
+    .howto-item {
+        margin-top: 12px;
+
+        .textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .add-button {
+            @include button-style(#007bff, darken(#007bff, 10%));
+        }
+
+        .remove-button {
+            @include button-style(#dc3545, darken(#dc3545, 10%));
+        }
+    }
+    @include sp {
+    }
+}
